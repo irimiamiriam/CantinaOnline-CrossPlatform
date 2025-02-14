@@ -9,4 +9,7 @@ public partial class MainPage : ContentPage
 		InitializeComponent();
 		conCheck.Text = "IsConnected: "+ IsConnected;
 	}
+
+
+
 }

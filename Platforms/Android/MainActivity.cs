@@ -12,7 +12,7 @@ namespace CantinaOnline
 
        
 
-        protected override async void OnCreate(Bundle savedInstanceState)
+        protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             firestore = new FirestoreService();
