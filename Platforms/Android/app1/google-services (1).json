@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "781291235388",
+    "project_id": "cantinacrossplatform",
+    "storage_bucket": "cantinacrossplatform.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:781291235388:android:a1200742ac54e1ccc8bb39",
+        "android_client_info": {
+          "package_name": "com.mycompany.myapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCHGgL7CVubWbH1lxrM8IqJyr2A1fOr3xY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

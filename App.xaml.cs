@@ -1,12 +1,14 @@
-﻿namespace CantinaOnline
+﻿using CantinaOnline.Pages;
+
+namespace CantinaOnline
 {
     public partial class App : Application
     {
-        public App()
+        public App(FirestoreService firestoreService)
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            MainPage = new SplashScreen(firestoreService);
         }
     }
 }

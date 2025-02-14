@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Runtime;
+using FirebaseAdmin;
 
 namespace CantinaOnline
 {
@@ -10,7 +11,9 @@ namespace CantinaOnline
             : base(handle, ownership)
         {
         }
-
+        
         protected override MauiApp CreateMauiApp() => MauiProgram.CreateMauiApp();
+
+      
     }
 }
