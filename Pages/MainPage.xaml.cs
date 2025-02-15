@@ -7,8 +7,8 @@ public partial class MainPage : ContentPage
     public MainPage(bool IsConnected)
 	{
 		InitializeComponent();
-		conCheck.Text = "IsConnected: "+ IsConnected;
-	}
+		conCheck.Text = "IsConnected: " + IsConnected;
+    }
 
 
 
