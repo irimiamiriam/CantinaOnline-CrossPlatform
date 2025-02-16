@@ -8,34 +8,34 @@ namespace CantinaOnline
     [Activity(Theme = "@style/MainTheme", MainLauncher = true, LaunchMode = LaunchMode.SingleTop, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize | ConfigChanges.Density)]
     public class MainActivity : MauiAppCompatActivity
     {
-        //private FirestoreService firestore;
-
-       
-
-        //protected override void OnCreate(Bundle savedInstanceState)
-        //{
-        //    base.OnCreate(savedInstanceState);
-        //    firestore = new FirestoreService();
-        //    CheckConnection();
-        //}
-
-        //private async void CheckConnection()
-        //{
-
-        //    bool IsConnected = IsConnectedToInternet() && firestore.CheckConnection();
-        //    MainPage main = new MainPage(IsConnected);
-        //    await Task.Delay(2000);
+        private FirestoreService firestore;
 
 
-        //    Microsoft.Maui.Controls.Application.Current.MainPage = main;
-        
-        //}
+
+        protected override void OnCreate(Bundle savedInstanceState)
+        {
+            base.OnCreate(savedInstanceState);
+            firestore = new FirestoreService();
+            CheckConnection();
+        }
+
+        private async void CheckConnection()
+        {
+
+            bool IsConnected = IsConnectedToInternet() && firestore.CheckConnection();
+            MainPage main = new MainPage(IsConnected, firestore);
+            await Task.Delay(2000);
 
 
-        //private bool IsConnectedToInternet()
-        //{
-        //    return Connectivity.Current.NetworkAccess == NetworkAccess.Internet;
-        //}
+            Microsoft.Maui.Controls.Application.Current.MainPage = main;
+
+        }
+
+
+        private bool IsConnectedToInternet()
+        {
+            return Connectivity.Current.NetworkAccess == NetworkAccess.Internet;
+        }
 
     }
 }

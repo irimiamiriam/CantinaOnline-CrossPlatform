@@ -7,6 +7,8 @@ namespace CantinaOnline
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
+            
+           
 
             builder.Services.AddSingleton<FirestoreService>();
 

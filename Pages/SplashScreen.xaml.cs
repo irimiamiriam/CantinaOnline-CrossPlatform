@@ -16,7 +16,7 @@ public partial class SplashScreen : ContentPage
     {
       
         bool IsConnected = IsConnectedToInternet() && firestore.CheckConnection();
-        MainPage main = new MainPage(IsConnected);
+        MainPage main = new MainPage(IsConnected, firestore);
         await Task.Delay(2000);   
         
         Application.Current.MainPage = main;
