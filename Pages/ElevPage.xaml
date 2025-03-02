@@ -1,12 +1,44 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:cal="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar"
+
              x:Class="CantinaOnline.Pages.ElevPage"
              Title="ElevPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10">
+
+            <!-- Cod QR -->
+            <Image
+                x:Name="QrCodeImage"
+                HeightRequest="200"
+                WidthRequest="200"/>
+            
+       
+            <!-- Nume Prenume -->
+            <Label x:Name="numeL" Text="{Binding user.Nume}" FontSize="18" TextColor="Black"/>
+           
+
+            <!-- Zile rămase (Calendar) -->
+            <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
+                <cal:RangeSelectionCalendar x:Name="calendarView"
+                                  SelectedDayBackgroundColor="Blue"
+                                  SelectedDayTextColor="White"
+                                  TodayOutlineColor="Red"
+                                  SelectedDate="{Binding SelectedDate, Mode=TwoWay}" />
+            </Frame>
+
+            <!-- Adaugă restanță -->
+            <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
+                <Label Text="Adaugă restanță" FontSize="18" TextColor="Black"/>
+            </Frame>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+
 </ContentPage>
