@@ -19,23 +19,38 @@
             
        
             <!-- Nume Prenume -->
-            <Label x:Name="numeL" Text="{Binding user.Nume}" FontSize="18" TextColor="Black"/>
-           
+            <Label x:Name="numeL" HorizontalOptions="Center" Text="{Binding user.Nume}" FontSize="18" TextColor="Black"/>
 
             <!-- Zile rămase (Calendar) -->
             <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
                 <cal:RangeSelectionCalendar x:Name="calendarView"
-                                  SelectedDayBackgroundColor="Blue"
-                                  SelectedDayTextColor="White"
-                                  TodayOutlineColor="Red"
-                                  SelectedDate="{Binding SelectedDate, Mode=TwoWay}" />
+                                  FirstDayOfWeek="Monday"  
+                                 TodayOutlineColor="Transparent"
+                                 EventIndicatorType="Background"
+                                 AllowDeselect="False"
+                                 EventIndicatorColor="White"
+                                 EventIndicatorSelectedColor="White"
+                                 SelectedDayBackgroundColor="Blue"
+                                 SelectedDatesRangeBackgroundColor="Blue"
+                                 SelectedDayTextColor="White"
+                                 InputTransparent="True"/>
             </Frame>
 
             <!-- Adaugă restanță -->
             <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
-                <Label Text="Adaugă restanță" FontSize="18" TextColor="Black"/>
-            </Frame>
+                <StackLayout>
+                    <Label Text="Adaugă restanță" FontSize="18" TextColor="Black"/>
 
+                    <!-- StackLayout to hold the Pickers -->
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Picker x:Name="dayPicker" Title="Selectează ziua"/>
+                        <Picker x:Name="monthPicker" Title="Selectează luna"/>
+                    </StackLayout>
+
+                    <!-- Add button for action -->
+                    <Button Text="Adaugă restanță" Clicked="OnAdaugaRestantaClicked"/>
+                </StackLayout>
+            </Frame>
         </VerticalStackLayout>
     </ScrollView>
 
