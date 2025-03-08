@@ -42,7 +42,9 @@ public class FirestoreService
     {
         return IsConnected;
     }
-    public async Task<ElevModel> GetElevByPassword(string password)
+
+    public async Task<ElevModel> GetElevByPassword
+        (string password)
     {
         try
         {
