@@ -1,12 +1,59 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:cal="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar"
+
              x:Class="CantinaOnline.Pages.ElevPage"
              Title="ElevPage">
-    <VerticalStackLayout>
-        <Label 
-            Text="Welcome to .NET MAUI!"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-    </VerticalStackLayout>
+
+    
+
+    <ScrollView>
+        <VerticalStackLayout Padding="10">
+
+            <!-- Cod QR -->
+            <Image
+                x:Name="QrCodeImage"
+                HeightRequest="200"
+                WidthRequest="200"/>
+            
+       
+            <!-- Nume Prenume -->
+            <Label x:Name="numeL" HorizontalOptions="Center" Text="{Binding user.Nume}" FontSize="18" TextColor="Black"/>
+
+            <!-- Zile rămase (Calendar) -->
+            <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
+                <cal:RangeSelectionCalendar x:Name="calendarView"
+                                  FirstDayOfWeek="Monday"  
+                                 TodayOutlineColor="Transparent"
+                                 EventIndicatorType="Background"
+                                 AllowDeselect="False"
+                                 EventIndicatorColor="White"
+                                 EventIndicatorSelectedColor="White"
+                                 SelectedDayBackgroundColor="Blue"
+                                 SelectedDatesRangeBackgroundColor="Blue"
+                                 SelectedDayTextColor="White"
+                                 InputTransparent="True"/>
+            </Frame>
+
+            <!-- Adaugă restanță -->
+            <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
+                <StackLayout>
+                    <Label Text="Adaugă restanță" FontSize="18" TextColor="Black"/>
+
+                    <!-- StackLayout to hold the Pickers -->
+                    <StackLayout Orientation="Horizontal" Spacing="10">
+                        <Picker x:Name="dayPicker" Title="Selectează ziua"/>
+                        <Picker x:Name="monthPicker" Title="Selectează luna"/>
+                    </StackLayout>
+
+                    <!-- Add button for action -->
+                    <Button Text="Adaugă restanță" Clicked="OnAdaugaRestantaClicked"/>
+                </StackLayout>
+            </Frame>
+        </VerticalStackLayout>
+    </ScrollView>
+
+
+
 </ContentPage>

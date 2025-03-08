@@ -5,13 +5,13 @@ namespace CantinaOnline.Pages;
 
 public partial class MainPage : ContentPage
 {
-	FirestoreService firestore;
+	private FirestoreService _firestore;
 
     public MainPage(bool IsConnected, FirestoreService firestore)
 	{
 
 		InitializeComponent();
-		 this.firestore=firestore;
+		 _firestore=firestore;
 		if (!IsConnected)
 		{
 			conCheck.Text = "Connection failed!";
@@ -21,13 +21,23 @@ public partial class MainPage : ContentPage
 		}
     }
 
-    private async void Button_Clicked(object sender, EventArgs e)
-    {
-        ElevModel user = await firestore.GetElevByPassword(passwordInput.Text);
-		if (user != null)
+	private async void Button_Clicked(object sender, EventArgs e)
+	{
+		if (passwordInput.Text is not null)
 		{
-			ElevPage ep = new ElevPage();
-			Application.Current.MainPage = ep;
+
+
+			ElevModel user = await _firestore.GetElevByPassword(passwordInput.Text);
+			if (user != null)
+			{
+				ElevPage ep = new ElevPage(user);
+				
+				Application.Current.MainPage = ep;
+			}
+			else
+			{
+                await Application.Current.MainPage.DisplayAlert("Error", "Wrong password. Please try again.", "OK");
+            }
 		}
-    }
+	}
 }

@@ -42,9 +42,7 @@ public class FirestoreService
     {
         return IsConnected;
     }
-
-    public async Task<ElevModel> GetElevByPassword
-        (string password)
+    public async Task<ElevModel?> GetElevByPassword(string password)
     {
         try
         {
@@ -59,10 +57,15 @@ public class FirestoreService
                 {
                     Id = Convert.ToInt32(doc.Id),
                     Nume = doc.GetValue<string>("Nume"),
-                    ZilePlatite = doc.ContainsField("ZilePlatite") ? doc.GetValue<List<DateTime>>("ZilePlatite") : new List<DateTime>()
+                    ZilePlatite =doc.ContainsField("ZilePlatite")
+            ? doc.GetValue<List<Timestamp>>("ZilePlatite")
+                  .Select(t => t.ToDateTime().ToLocalTime()) // Convert UTC to Local Time
+                  .ToList()
+            : new List<DateTime>()
                 };
-            }
-            return null;
+            } 
+            else
+                return null;
         }
         catch (Exception ex)
         {

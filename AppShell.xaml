@@ -8,9 +8,6 @@
     Shell.FlyoutBehavior="Disabled"
     Title="CantinaOnline">
 
-    <ShellContent
-        Title="SplashScreen"
-        ContentTemplate="{DataTemplate pages:SplashScreen}"
-        Route="SplashScreen" />
+   
 
 </Shell>

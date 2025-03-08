@@ -1,5 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
-
+﻿using CommunityToolkit.Maui;
+using Microsoft.Extensions.Logging;
 namespace CantinaOnline
 {
     public static class MauiProgram
@@ -14,6 +14,7 @@ namespace CantinaOnline
 
             builder
                 .UseMauiApp<App>()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
