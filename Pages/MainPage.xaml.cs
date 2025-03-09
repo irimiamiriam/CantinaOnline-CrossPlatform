@@ -11,7 +11,8 @@ public partial class MainPage : ContentPage
 	{
 
 		InitializeComponent();
-		 _firestore=firestore;
+
+        _firestore = firestore;
 		if (!IsConnected)
 		{
 			conCheck.Text = "Connection failed!";
@@ -26,8 +27,8 @@ public partial class MainPage : ContentPage
 		if (passwordInput.Text is not null)
 		{
 
-
-			ElevModel user = await _firestore.GetElevByPassword(passwordInput.Text);
+			ElevModel? user = await GetElev();
+			AdminModel? admin = await GetAdmin();
 			if (user != null)
 			{
 				ElevPage ep = new ElevPage(user);
@@ -36,8 +37,36 @@ public partial class MainPage : ContentPage
 			}
 			else
 			{
-                await Application.Current.MainPage.DisplayAlert("Error", "Wrong password. Please try again.", "OK");
+				if (admin == null)
+				{
+					await Application.Current.MainPage.DisplayAlert("Error", "Parola gresita , incercati din nou!", "OK");
+				}
+				else
+				{
+					if (admin.Rol == "Contabil")
+					{
+						ContabilPage cp = new ContabilPage();
+						Application.Current.MainPage = cp;
+					}
+					else
+					{
+						AdminPage ap = new AdminPage();
+						Application.Current.MainPage = ap;
+					}
+				}
             }
 		}
 	}
+
+    private async Task<AdminModel?> GetAdmin()
+    {
+		
+		return await _firestore.GetAdminByPassword(passwordInput.Text);
+    }
+
+    private async Task<ElevModel?> GetElev()
+    {
+      
+		return await _firestore.GetElevByPassword(passwordInput.Text);
+    }
 }

@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
+            
+             
 			 x:Class="CantinaOnline.Pages.MainPage"
 			 Title="MainPage">
+   
+  
     
 	<VerticalStackLayout Spacing="0" Padding="20" BackgroundColor="White">
 		
@@ -46,7 +51,7 @@
 		</HorizontalStackLayout>
 
 		<!-- Login Buttons -->
-		<Button Text="Login elev"
+		<Button Text="Login"
 			FontAttributes="Bold"
 			FontFamily="Rony"
 			HeightRequest="48"
@@ -57,15 +62,7 @@
 			HorizontalOptions="Fill"
                 Clicked="Button_Clicked"/>
 
-		<Button Text="Login admin" 
-			FontAttributes="Bold"
-			FontFamily="Rony"
-			HeightRequest="48"
-			BackgroundColor="#FF3B30" 
-			TextColor="White"
-			CornerRadius="12"
-            Margin="20,0,20,0"
-			HorizontalOptions="Fill"/>
+		
 
 	</VerticalStackLayout>
 </ContentPage>
