@@ -6,6 +6,7 @@
     xmlns:pages="clr-namespace:CantinaOnline.Pages"
   
     Shell.FlyoutBehavior="Disabled"
+    Shell.NavBarIsVisible="False"
     Title="CantinaOnline">
 
    

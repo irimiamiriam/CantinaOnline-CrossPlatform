@@ -1,4 +1,5 @@
 ﻿using CommunityToolkit.Maui;
+using Google.Cloud.Firestore.V1;
 using Microsoft.Extensions.Logging;
 namespace CantinaOnline
 {
@@ -7,8 +8,8 @@ namespace CantinaOnline
         public static MauiApp CreateMauiApp()
         {
             var builder = MauiApp.CreateBuilder();
-            
-           
+
+        
 
             builder.Services.AddSingleton<FirestoreService>();
 

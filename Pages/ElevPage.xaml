@@ -43,8 +43,8 @@
 
                     <!-- StackLayout to hold the Pickers -->
                     <StackLayout Orientation="Horizontal" Spacing="10">
-                        <Picker x:Name="dayPicker" Title="Selectează ziua"/>
-                        <Picker x:Name="monthPicker" Title="Selectează luna"/>
+                        
+                        <Picker x:Name="monthPicker" Title="Selectează ziua"/>
                     </StackLayout>
 
                     <!-- Add button for action -->
