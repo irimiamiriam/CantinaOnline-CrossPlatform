@@ -12,7 +12,7 @@ namespace CantinaOnline
             this.firestore = firestore;
             MainPage = new ContentPage();
 
-            // Start the connection check process
+            //FirestoreService.UpdateUserZilePlatite();
             CheckConnection();
         }
 
@@ -20,11 +20,10 @@ namespace CantinaOnline
         {
             await Task.Delay(2000);
 
-            // Check network and Firestore connectivity
             bool isConnected = IsConnectedToInternet() && firestore.CheckConnection();
 
-            // Navigate to MainPage
-            MainPage = new MainPage(isConnected, firestore);
+            MainPage = new NavigationPage(new MainPage(isConnected, firestore));
+            
         }
 
         private bool IsConnectedToInternet()

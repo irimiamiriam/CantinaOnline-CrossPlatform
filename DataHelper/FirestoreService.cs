@@ -33,8 +33,8 @@ public class FirestoreService
 
         catch (Exception ex)
         {
-            Console.WriteLine($"❌ Firestore initialization failed: {ex.Message}");
-            Console.WriteLine($"💡 Inner Exception: {ex.InnerException?.Message}");
+            Console.WriteLine($" Firestore initialization failed: {ex.Message}");
+            Console.WriteLine($" Inner Exception: {ex.InnerException?.Message}");
             throw;
         }
     }
@@ -80,7 +80,7 @@ public class FirestoreService
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"❌ Error retrieving user: {ex.Message}");
+            Console.WriteLine($" Error retrieving user: {ex.Message}");
             return null;
       
         }
@@ -132,59 +132,59 @@ public class FirestoreService
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"❌ Error retrieving user: {ex.Message}");
+            Console.WriteLine($" Error retrieving user: {ex.Message}");
             return null;
 
         }
     }
-   
 
-public static async Task UpdateUserZilePlatite()
-{
-    try
-    {
-       
 
-        // Get user with password "miriam100"
-        CollectionReference usersRef = _db.Collection("Users");
-        Query query = usersRef.WhereEqualTo("Parola", "miriam100");
-        QuerySnapshot snapshot = await query.GetSnapshotAsync();
+    //public static async Task UpdateUserZilePlatite()
+    //{
+    //    try
+    //    {
 
-       
 
-        DocumentReference userDoc = snapshot.Documents[0].Reference;
 
-        // Generate all weekdays for March
-        Dictionary<string, int> zilePlatite = new Dictionary<string, int>();
-        int year = DateTime.Now.Year; // Current year
-        int month = 3; // March
+    //        CollectionReference usersRef = _db.Collection("Users");
+    //        Query query = usersRef.WhereEqualTo("Parola", "miriam100");
+    //        QuerySnapshot snapshot = await query.GetSnapshotAsync();
 
-        int daysInMonth = DateTime.DaysInMonth(year, month);
-        for (int day = 1; day <= daysInMonth; day++)
-        {
-            DateTime date = new DateTime(year, month, day);
 
-            // Skip Saturdays and Sundays
-            if (date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday)
-            {
-                zilePlatite[date.ToString("yyyy-MM-dd")] = 0;
-            }
-        }
 
-        // Update Firestore document
-        await userDoc.UpdateAsync(new Dictionary<string, object>
-        {
-            { "ZilePlatite", zilePlatite }
-        });
+    //        DocumentReference userDoc = snapshot.Documents[0].Reference;
 
-        
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"❌ Error updating user: {ex.Message}");
-    }
-}
-    public static async Task UpdateZilePlatite(DateTime selectedDate, ElevModel user)
+    //        // Generate all weekdays for Martie
+    //        Dictionary<string, int> zilePlatite = new Dictionary<string, int>();
+    //        int year = DateTime.Now.Year; 
+    //        int month = 3;
+
+    //        int daysInMonth = DateTime.DaysInMonth(year, month);
+    //        for (int day = 1; day <= daysInMonth; day++)
+    //        {
+    //            DateTime date = new DateTime(year, month, day);
+
+    //            // Skip Sambt&Dum
+    //            if (date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday)
+    //            {
+    //                zilePlatite[date.ToString("dd-MM-yyyy")] = 0;
+    //            }
+    //        }
+
+    //        // Update Firestore document
+    //        await userDoc.UpdateAsync(new Dictionary<string, object>
+    //    {
+    //        { "ZilePlatite", zilePlatite }
+    //    });
+
+
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        Console.WriteLine($" Error updating user: {ex.Message}");
+    //    }
+    //}
+    public static async Task UpdateZilePlatite(DateTime selectedDate, ElevModel user, int value)
     {
         try
         {
@@ -204,7 +204,7 @@ public static async Task UpdateUserZilePlatite()
             int nrRestante = userData.ContainsKey("NrRestante") ? snapshot.GetValue<int>("NrRestante") : 0;
 
             // Mark the selected date as 1 (Restanță)
-            zilePlatite[selectedDate.ToString("yyyy-MM-dd")] = 1;
+            zilePlatite[selectedDate.ToString("yyyy-MM-dd")] = value;
 
             // Increment NrRestante
             nrRestante++;

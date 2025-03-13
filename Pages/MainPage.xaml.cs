@@ -32,10 +32,10 @@ public partial class MainPage : ContentPage
 			if (user != null)
 			{
 				ElevPage ep = new ElevPage(user);
-				
-				Application.Current.MainPage = ep;
-			}
-			else
+
+                await Navigation.PushAsync(ep);
+            }
+            else
 			{
 				if (admin == null)
 				{
@@ -46,14 +46,16 @@ public partial class MainPage : ContentPage
 					if (admin.Rol == "Contabil")
 					{
 						ContabilPage cp = new ContabilPage();
-						Application.Current.MainPage = cp;
-					}
-					else
+                        await Navigation.PushAsync(cp);
+
+                    }
+                    else
 					{
 						AdminPage ap = new AdminPage();
-						Application.Current.MainPage = ap;
-					}
-				}
+						await Navigation.PushAsync(ap);
+
+                    }
+                }
             }
 		}
 	}

@@ -14,12 +14,13 @@
             <!-- Cod QR -->
             <Image
                 x:Name="QrCodeImage"
+                 Source="{Binding QrCodeImage}"
                 HeightRequest="200"
                 WidthRequest="200"/>
             
        
             <!-- Nume Prenume -->
-            <Label x:Name="numeL" HorizontalOptions="Center" Text="{Binding user.Nume}" FontSize="18" TextColor="Black"/>
+            <Label x:Name="numeL" HorizontalOptions="Center" Text="{Binding Nume}" FontSize="18" TextColor="Black"/>
 
             <!-- Zile rămase (Calendar) -->
             <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
@@ -27,30 +28,17 @@
                                   FirstDayOfWeek="Monday"  
                                  TodayOutlineColor="Transparent"
                                  EventIndicatorType="Background"
-                                 AllowDeselect="False"
                                  EventIndicatorColor="White"
                                  EventIndicatorSelectedColor="White"
                                  SelectedDayBackgroundColor="Blue"
                                  SelectedDatesRangeBackgroundColor="Blue"
                                  SelectedDayTextColor="White"
-                                 InputTransparent="True"/>
+                                              SelectedDates="{Binding SelectedDates}"
+                                 Events="{Binding Events}"
+                                        DayTappedCommand="{Binding DayTappedCommand}"     />
             </Frame>
 
-            <!-- Adaugă restanță -->
-            <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
-                <StackLayout>
-                    <Label Text="Adaugă restanță" FontSize="18" TextColor="Black"/>
-
-                    <!-- StackLayout to hold the Pickers -->
-                    <StackLayout Orientation="Horizontal" Spacing="10">
-                        
-                        <Picker x:Name="monthPicker" Title="Selectează ziua"/>
-                    </StackLayout>
-
-                    <!-- Add button for action -->
-                    <Button Text="Adaugă restanță" Clicked="OnAdaugaRestantaClicked"/>
-                </StackLayout>
-            </Frame>
+          
         </VerticalStackLayout>
     </ScrollView>
 
