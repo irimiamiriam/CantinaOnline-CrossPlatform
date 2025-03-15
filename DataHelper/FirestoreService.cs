@@ -221,7 +221,34 @@ public class FirestoreService
         {
             Console.WriteLine($" Error updating Firestore: {ex.Message}");
         }
+    
     }
+
+    public static async Task<int> GetUsersEatingToday()
+    {
+        try
+        {
+            CollectionReference usersRef = _db.Collection("Users");
+            QuerySnapshot snapshot = await usersRef.GetSnapshotAsync();
+
+            DateTime today = DateTime.Today;
+            string todayString = today.ToString("yyyy-MM-dd");
+
+            int count = snapshot.Documents.Count(doc =>
+                doc.ContainsField("ZilePlatite") &&
+                doc.GetValue<Dictionary<string, int>>("ZilePlatite")
+                    .ContainsKey(todayString) &&
+                doc.GetValue<Dictionary<string, int>>("ZilePlatite")[todayString] == 0);
+
+            return count;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving users eating today: {ex.Message}");
+            return 0; // Return 0 if an error occurs
+        }
+    }
+
 
 }
 

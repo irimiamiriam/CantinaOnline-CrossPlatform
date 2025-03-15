@@ -54,7 +54,6 @@ public class ElevPageViewModel : INotifyPropertyChanged
     public List<DateTime> ZilePlatiteKeys => _user.ZilePlatite.Keys.ToList();
 
     public ICommand DayTappedCommand { get; }
-    public ICommand AdaugaRestantaCommand { get; }
 
     public ElevPageViewModel(ElevModel user)
     {
@@ -74,7 +73,6 @@ public class ElevPageViewModel : INotifyPropertyChanged
         PngByteQRCode qRCode = new PngByteQRCode(qrCodeData);
         byte[] qrCodeBytes = qRCode.GetGraphic(20);
 
-        // Convert byte array to ImageSource
         QrCodeImage = ImageSource.FromStream(() => new MemoryStream(qrCodeBytes));
     }
 
