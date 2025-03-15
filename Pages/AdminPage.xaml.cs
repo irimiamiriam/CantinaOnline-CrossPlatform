@@ -16,13 +16,11 @@ public partial class AdminPage : ContentPage
     private void OnPlataNouaClicked(object sender, EventArgs e)
     {
         // Handle "Plata noua" button click
-        DisplayAlert("Plata noua", "Plata noua button clicked!", "OK");
     }
 
     private void OnListaEleviClicked(object sender, EventArgs e)
     {
         // Handle "Lista elevi" button click
-        DisplayAlert("Lista elevi", "Lista elevi button clicked!", "OK");
     }
 
 }
