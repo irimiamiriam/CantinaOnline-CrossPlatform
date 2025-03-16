@@ -13,16 +13,15 @@
                HorizontalOptions="Center"/>
       
         <cv:CameraView x:Name="qrCamera"
-                           Camera="Rear"
-                           BarcodeDetected="{Binding OnBarcodeScannedCommand}"
+                          CamerasLoaded="cameraView_CamerasLoaded"
+                          BarcodeDetected="cameraView_BarcodeDetected"
+
                            HorizontalOptions="FillAndExpand"
                            HeightRequest="300" />
 
-        <Button Text="Start Camera" Command="{Binding StartCameraCommand}" />
-        <Button Text="Stop Camera" Command="{Binding StopCameraCommand}" />
+        <Button Text="Scan QR Code" Command="{Binding ScanQrCodeCommand}" />
 
-        <!-- Label to Show Scan Result -->
-        <Label x:Name="ScanResultLabel" Text="{Binding ScanResult}" FontSize="16" TextColor="Black" />
 
+        
     </VerticalStackLayout>
 </ContentPage>
