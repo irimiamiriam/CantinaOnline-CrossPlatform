@@ -13,7 +13,7 @@
 		
         <Label 
 			x:Name="conCheck"
-			Text="MainPage"
+		Text="{Binding ConnectionStatus}"
 			VerticalOptions="Center" 
 			HorizontalOptions="Center" />
 
@@ -37,6 +37,7 @@
 			StrokeShape="RoundRectangle 12">
 			<Entry Placeholder="Password" 
                    x:Name="passwordInput"
+                   Text="{Binding PasswordInput}"
 				FontFamily="Rony"
                    IsPassword="True"
 				BackgroundColor="Transparent"/>
@@ -60,7 +61,7 @@
 			CornerRadius="12"
 			Margin="20,0,20,0"
 			HorizontalOptions="Fill"
-                Clicked="Button_Clicked"/>
+           Command="{Binding LoginCommand}"/>
 
 		
 

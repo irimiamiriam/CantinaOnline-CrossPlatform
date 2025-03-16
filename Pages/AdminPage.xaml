@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
              x:Class="CantinaOnline.Pages.AdminPage"
              Title="AdminPage">
 
@@ -10,5 +11,18 @@
                FontAttributes="Bold"
                TextColor="Black"
                HorizontalOptions="Center"/>
+      
+        <cv:CameraView x:Name="qrCamera"
+                           Camera="Rear"
+                           BarcodeDetected="{Binding OnBarcodeScannedCommand}"
+                           HorizontalOptions="FillAndExpand"
+                           HeightRequest="300" />
+
+        <Button Text="Start Camera" Command="{Binding StartCameraCommand}" />
+        <Button Text="Stop Camera" Command="{Binding StopCameraCommand}" />
+
+        <!-- Label to Show Scan Result -->
+        <Label x:Name="ScanResultLabel" Text="{Binding ScanResult}" FontSize="16" TextColor="Black" />
+
     </VerticalStackLayout>
 </ContentPage>
