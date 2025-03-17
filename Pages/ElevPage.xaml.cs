@@ -16,8 +16,6 @@ public partial class ElevPage : ContentPage
         BindingContext = new ElevPageViewModel(user);
 
 
-
-
     }
 
 

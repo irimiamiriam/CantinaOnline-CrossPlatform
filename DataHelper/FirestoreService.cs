@@ -189,13 +189,11 @@ public class FirestoreService
         try
         {
 
-            // Get the user document
             DocumentReference userDoc = _db.Collection("Users").Document(user.Id.ToString());
             DocumentSnapshot snapshot = await userDoc.GetSnapshotAsync();
 
            
 
-            // Get existing data
             Dictionary<string, object> userData = snapshot.ToDictionary();
             Dictionary<string, int> zilePlatite = userData.ContainsKey("ZilePlatite")
                 ? snapshot.GetValue<Dictionary<string, int>>("ZilePlatite")
@@ -203,14 +201,19 @@ public class FirestoreService
 
             int nrRestante = userData.ContainsKey("NrRestante") ? snapshot.GetValue<int>("NrRestante") : 0;
 
-            // Mark the selected date as 1 (Restanță)
             zilePlatite[selectedDate.ToString("yyyy-MM-dd")] = value;
 
-            // Increment NrRestante
-            nrRestante++;
+            if (value == 1)
+            {
+                nrRestante++;
+            }else
+            {
+                nrRestante--;
+            }
 
-            // Update Firestore
-            await userDoc.UpdateAsync(new Dictionary<string, object>
+
+                // Update Firestore
+                await userDoc.UpdateAsync(new Dictionary<string, object>
         {
             { "ZilePlatite", zilePlatite },
             { "NrRestante", nrRestante }
@@ -245,7 +248,7 @@ public class FirestoreService
         catch (Exception ex)
         {
             Console.WriteLine($"Error retrieving users eating today: {ex.Message}");
-            return 0; // Return 0 if an error occurs
+            return 0; 
         }
     }
 

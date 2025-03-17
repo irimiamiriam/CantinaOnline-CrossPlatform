@@ -1,6 +1,8 @@
 ﻿using CommunityToolkit.Maui;
 using Google.Cloud.Firestore.V1;
 using Microsoft.Extensions.Logging;
+using Microsoft.Maui.Controls.Compatibility.Hosting;
+using Camera.MAUI;
 namespace CantinaOnline
 {
     public static class MauiProgram
@@ -13,9 +15,13 @@ namespace CantinaOnline
 
             builder.Services.AddSingleton<FirestoreService>();
 
+
             builder
                 .UseMauiApp<App>()
+                .UseMauiCameraView()
                 .UseMauiCommunityToolkit()
+                            
+
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
