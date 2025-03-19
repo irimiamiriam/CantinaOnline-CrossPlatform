@@ -12,14 +12,14 @@
                TextColor="Black"
                HorizontalOptions="Center"/>
       
-        <cv:CameraView x:Name="qrCamera"
+        <cv:CameraView x:Name="cameraView"
                           CamerasLoaded="cameraView_CamerasLoaded"
                           BarcodeDetected="cameraView_BarcodeDetected"
-
-                           HorizontalOptions="FillAndExpand"
+                           BarCodeDetectionEnabled="True"
                            HeightRequest="300" />
-
-        <Button Text="Scan QR Code" Command="{Binding ScanQrCodeCommand}" />
+        <Label x:Name="barcodeResult"></Label>
+        
+       
 
 
         

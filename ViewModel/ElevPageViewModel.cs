@@ -87,7 +87,7 @@ public class ElevPageViewModel : INotifyPropertyChanged
             try
             {
                 var dataGasita = _user.ZilePlatite.First(d => d.Key.Date == dataInceput.Date);
-                if (dataGasita.Value == 1||dataGasita.Key<DateTime.Now)
+                if (dataGasita.Value == 1||dataInceput.Date<DateTime.Now.Date)
                 {
                     _events[dataInceput] = new List<EventModel> { new EventModel { Name = "", Description = "" } };
                 }
@@ -104,7 +104,7 @@ public class ElevPageViewModel : INotifyPropertyChanged
     private async void OnDayTapped(DateTime dateTapped)
     {
 
-        if (dateTapped >=DateTime.Now&& dateTapped.DayOfWeek!=DayOfWeek.Saturday&& dateTapped.DayOfWeek != DayOfWeek.Sunday)
+        if (dateTapped.Date >=DateTime.Now.Date&& dateTapped.DayOfWeek!=DayOfWeek.Saturday&& dateTapped.DayOfWeek != DayOfWeek.Sunday)
         {
             if (_user.ZilePlatite.Where(d => d.Key.Date == dateTapped.Date).First().Value == 0)
             {
@@ -112,7 +112,7 @@ public class ElevPageViewModel : INotifyPropertyChanged
 
                 if (confirm)
                 {
-                    if (DateTime.Now.Date == dateTapped.Date && DateTime.Now.Hour > 8)
+                    if (DateTime.Now.Date == dateTapped.Date && DateTime.Now.Hour >= 8)
                     {
                         await Application.Current.MainPage.DisplayAlert("Alerta", "Nu puteti adauga restanta dupa ora 8", "Cancel");
                     }
