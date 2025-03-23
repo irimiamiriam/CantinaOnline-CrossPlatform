@@ -12,12 +12,6 @@
                FontAttributes="Bold"
                TextColor="Black"
                HorizontalOptions="Center"/>
-      
-        <cv:CameraView x:Name="qrCamera"
-                           Camera="Rear"
-                           BarcodeDetected="{Binding OnBarcodeScannedCommand}"
-                           HorizontalOptions="FillAndExpand"
-                           HeightRequest="300" />
 
         <Button Text="Start Camera" Command="{Binding StartCameraCommand}" />
         <Button Text="Stop Camera" Command="{Binding StopCameraCommand}" />
