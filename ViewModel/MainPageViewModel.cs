@@ -43,7 +43,7 @@ namespace CantinaOnline.ViewModels
             }
             else if (admin != null)
             {
-                Page nextPage = admin.Rol == "Contabil" ? new ContabilPage() : new AdminPage();
+                Page nextPage = admin.Rol == "Contabil" ? new ContabilPage() : new AdminPage(_firestore);
                 await Application.Current.MainPage.Navigation.PushAsync(nextPage);
             }
             else

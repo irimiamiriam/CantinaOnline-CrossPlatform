@@ -12,12 +12,17 @@
                FontAttributes="Bold"
                TextColor="Black"
                HorizontalOptions="Center"/>
+      
+        <cv:CameraView x:Name="cameraView"
+                          CamerasLoaded="cameraView_CamerasLoaded"
+                          BarcodeDetected="cameraView_BarcodeDetected"
+                           BarCodeDetectionEnabled="True"
+                           HeightRequest="300" />
+        <Label x:Name="barcodeResult"></Label>
+        
+       
 
-        <Button Text="Start Camera" Command="{Binding StartCameraCommand}" />
-        <Button Text="Stop Camera" Command="{Binding StopCameraCommand}" />
 
-        <!-- Label to Show Scan Result -->
-        <Label x:Name="ScanResultLabel" Text="{Binding ScanResult}" FontSize="16" TextColor="Black" />
-
+        
     </VerticalStackLayout>
 </ContentPage>

@@ -1,30 +1,30 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using Camera.MAUI;
+using Camera.MAUI.ZXingHelper;
+using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Dispatching;
+using Microsoft.Maui.Controls;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace CantinaOnline.ViewModel
+public partial class AdminPageViewModel : ObservableObject
 {
-    public class AdminPageViewModel : ObservableObject
+    private int _usersEatingToday;
+    public int UsersEatingToday
     {
-        private int _usersEatingToday;
-        public int UsersEatingToday
-        {
-            get => _usersEatingToday;
-            set => SetProperty(ref _usersEatingToday, value);
-        }
+        get => _usersEatingToday;
+        set => SetProperty(ref _usersEatingToday, value);
+    }
 
-        public AdminPageViewModel()
-        {
-            LoadData();
-        }
+    public AdminPageViewModel()
+    {
+        LoadData();
+    }
 
-        private async void LoadData()
-        {
-            UsersEatingToday = await FirestoreService.GetUsersEatingToday();
-        }
+    private async void LoadData()
+    {
+        UsersEatingToday = await FirestoreService.GetUsersEatingToday();
     }
 
 }

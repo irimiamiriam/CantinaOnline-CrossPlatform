@@ -251,7 +251,41 @@ public class FirestoreService
             return 0; 
         }
     }
+    public static async Task<ElevModel?> GetUserById(string userId)
+    {
+        return await Task.Run(async () =>
+        {
+            try
+            {
+                DocumentReference userDoc = _db.Collection("Users").Document(userId);
+                DocumentSnapshot snapshot = await userDoc.GetSnapshotAsync();
 
+                if (!snapshot.Exists)
+                    return null;
+
+                // Fetch user details
+                Dictionary<string, int> zilePlatite = snapshot.ContainsField("ZilePlatite")
+                    ? snapshot.GetValue<Dictionary<string, int>>("ZilePlatite")
+                    : new Dictionary<string, int>();
+
+                return new ElevModel
+                {
+                    Id = Convert.ToInt32(userId),
+                    Nume = snapshot.GetValue<string>("Nume"),
+                    ZilePlatite = zilePlatite.ToDictionary(
+                        kvp => DateTime.Parse(kvp.Key).Date,
+                        kvp => kvp.Value
+                    )
+                };
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error retrieving user by ID: {ex.Message}");
+                return null;
+            }
+        }).ConfigureAwait(false);
+
+    }
 
 }
 
