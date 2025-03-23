@@ -24,17 +24,10 @@
                  BackgroundColor="#007AFF" 
                  TextColor="Black" 
                  Padding="20,10"
+                    Clicked="Button_Clicked"
               />
 
-            <!-- Lista elevi Button -->
-            <Button Text="Lista elevi" 
-                 FontSize="18" 
-                 HorizontalOptions="FillAndExpand" 
-                 VerticalOptions="Center" 
-                 BackgroundColor="#007AFF" 
-                 TextColor="Black" 
-                 Padding="20,10"
-              />
+           
         </StackLayout>
     </Grid>
 </ContentPage>
