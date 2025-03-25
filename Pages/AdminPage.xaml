@@ -16,8 +16,8 @@
         <cv:CameraView x:Name="cameraView"
                           CamerasLoaded="cameraView_CamerasLoaded"
                           BarcodeDetected="cameraView_BarcodeDetected"
-                           BarCodeDetectionEnabled="True"
-                           HeightRequest="300" />
+                          BarCodeDetectionEnabled="True"
+                          HeightRequest="300" />
         <Label x:Name="barcodeResult"></Label>
         
        

@@ -51,7 +51,6 @@ public class FirestoreService
             Query query = usersRef.WhereEqualTo("Parola", password);
             QuerySnapshot snapshot = await query.GetSnapshotAsync();
 
-            int i = 0;
             if (snapshot.Documents.Count > 0)
             {
                 var doc = snapshot.Documents[0];
