@@ -374,6 +374,36 @@ public class FirestoreService
             Console.WriteLine($"Error updating user's ZilePlatite: {ex.Message}");
         }
     }
+    public async Task UpdateAdminZileCantina(Dictionary<string, int> zileCantina)
+    {
+        try
+        {
+            // Get the Admin document where Rol = "contabil"
+            var adminsRef = _db.Collection("Admins");
+            var query = adminsRef.WhereEqualTo("Rol", "Contabil");
+            var snapshot = await query.GetSnapshotAsync();
+
+            if (snapshot.Documents.Count == 0)
+            {
+                Console.WriteLine("No contabil admin found.");
+                return;
+            }
+
+            var adminDoc = snapshot.Documents[0].Reference;
+
+            await adminDoc.UpdateAsync(new Dictionary<string, object>
+        {
+            { "ZileCantina", zileCantina }
+        });
+
+            Console.WriteLine("ZileCantina updated successfully!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating ZileCantina: {ex.Message}");
+        }
+    }
+
 
 
 
