@@ -3,7 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
              x:Class="CantinaOnline.Pages.AdminPage"
-             Title="AdminPage">
+             Title="AdminPage"
+             NavigationPage.HasNavigationBar="True">
 
     <VerticalStackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
         <Label Text="{Binding UsersEatingToday, StringFormat='Număr utilizatori care mănâncă azi: {0}'}"
@@ -15,8 +16,8 @@
         <cv:CameraView x:Name="cameraView"
                           CamerasLoaded="cameraView_CamerasLoaded"
                           BarcodeDetected="cameraView_BarcodeDetected"
-                           BarCodeDetectionEnabled="True"
-                           HeightRequest="300" />
+                          BarCodeDetectionEnabled="True"
+                          HeightRequest="300" />
         <Label x:Name="barcodeResult"></Label>
         
        
