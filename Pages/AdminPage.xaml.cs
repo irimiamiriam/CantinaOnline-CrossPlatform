@@ -51,9 +51,27 @@ public partial class AdminPage : ContentPage
         }
     }
 
-    private void cameraView_BarcodeDetected(object sender, BarcodeEventArgs args)
+    private async void cameraView_BarcodeDetected(object sender, BarcodeEventArgs args)
     {
+        await MainThread.InvokeOnMainThreadAsync(async () =>
+        {
+            string qrId = args.Result[0].Text;
+            var user = await FirestoreService.GetUserById(qrId);
+            if (user != null)
+            {
+                DateTime today = DateTime.Now.Date;
+                bool isPaid = user.ZilePlatite.ContainsKey(today) && user.ZilePlatite[today] == 0;
+                string message = isPaid ? "Utilizatorul a platit" : "Utilizatorul nu a platit";
+                barcodeResult.Text = message;
 
+
+            }
+            else
+            {
+                barcodeResult.Text = "Nu exista elevul!";
+            }
+
+        });
 
     }
 }
