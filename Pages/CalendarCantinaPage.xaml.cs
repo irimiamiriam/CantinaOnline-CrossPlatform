@@ -7,6 +7,7 @@ public partial class CalendarCantinaPage : ContentPage
 	public CalendarCantinaPage()
 	{
 		InitializeComponent();
-		BindingContext = new CalendarCantinaModelView(new FirestoreService());
+		
+		BindingContext = new CalendarCantinaModelView();
 	}
 } 

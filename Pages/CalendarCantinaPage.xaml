@@ -16,11 +16,11 @@
                         SelectedDayBackgroundColor="Blue"
                         SelectedDatesRangeBackgroundColor="Blue"
                         SelectedDayTextColor="White"
-                        SelectedDates="{Binding SelectedDates}"
-                        Events="{Binding Events}"
+                        SelectedDates="{Binding SelectedDates,Mode=TwoWay}"
+                        Events="{Binding Events,Mode=TwoWay}"
                          DayTappedCommand="{Binding DayTappedCommand}"   /> 
                 </Frame>               
-        <Button Text="Update" Command="{Binding UpdateDatabaseCommand}" />
+        <Button Text="Update" Command="{Binding UpdateCalendarCommand}" />
 </StackLayout>
     
 </ContentPage>

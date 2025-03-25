@@ -1,99 +1,127 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+using System.Windows.Input;
+using CantinaOnline.Models;
+using Plugin.Maui.Calendar.Models;
 using CommunityToolkit.Mvvm.Input;
-using System.Collections.ObjectModel;
 
-public class CalendarCantinaModelView : ObservableObject
+public class CalendarCantinaModelView : INotifyPropertyChanged
 {
-    private readonly FirestoreService _firestoreService;
+    private EventCollection _events;
+    private List<DateTime> _selectedDates;
+    private FirestoreService _firestoreService;
 
-    Dictionary<string, int> zileCantina = new Dictionary<string, int>();
+    public event PropertyChangedEventHandler PropertyChanged;
 
-    private ObservableCollection<DateTime> _selectedDates;
-    public ObservableCollection<DateTime> SelectedDates
-    {
-        get => _selectedDates;
-        set => SetProperty(ref _selectedDates, value);
-    }
-
-    private Dictionary<DateTime, string> _events;
-    public Dictionary<DateTime, string> Events
+    public EventCollection Events
     {
         get => _events;
-        set => SetProperty(ref _events, value);
+        set
+        {
+            _events = value;
+            OnPropertyChanged();
+        }
     }
 
-    public IRelayCommand<DateTime> DayTappedCommand { get; }
-
-    public CalendarCantinaModelView(FirestoreService firestoreService)
+    public List<DateTime> SelectedDates
     {
-        _firestoreService = firestoreService;
+        get => _selectedDates;
+        set
+        {
+            _selectedDates = value;
+            OnPropertyChanged();
+        }
+    }
+    List<DateTime> tempDates;
+    Dictionary<string, int> zileCantina;
+    public ICommand DayTappedCommand { get; }
+    public ICommand UpdateCalendarCommand { get; }
 
-        SelectedDates = new ObservableCollection<DateTime>();
-        Events = new Dictionary<DateTime, string>();
+    public CalendarCantinaModelView()
+    {
+        _firestoreService = new FirestoreService();
+        _events = new EventCollection();
+        _selectedDates = new List<DateTime>();
 
-        DayTappedCommand = new RelayCommand<DateTime>(ToggleEventOnDate);
+        DayTappedCommand = new RelayCommand<DateTime>(OnDayTapped);
+        UpdateCalendarCommand = new RelayCommand(async () => await UpdateCalendar());
 
         InitializeCalendar();
     }
 
     private async void InitializeCalendar()
     {
-        await LoadZileCantinaFromDatabase();
+        await LoadSelectedDates();
         MarkWeekendsAsEvents();
     }
 
-    private async Task LoadZileCantinaFromDatabase()
+    private async Task LoadSelectedDates()
     {
         zileCantina = await FirestoreService.GetAdminZileCantina();
 
         if (zileCantina != null)
         {
-            SelectedDates.Clear();
+            tempDates = new List<DateTime>();
+
             foreach (var dateString in zileCantina.Keys)
             {
                 if (DateTime.TryParse(dateString, out DateTime date))
                 {
-                    SelectedDates.Add(date);
+                    tempDates.Add(date);
                 }
             }
+
+            SelectedDates = tempDates;
+            Console.WriteLine($"Loaded {SelectedDates.Count} selected dates from Firestore.");
         }
+
+
+        // Refresh UI
+        OnPropertyChanged(nameof(SelectedDates));
     }
 
     private void MarkWeekendsAsEvents()
     {
-        DateTime firstDay = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-        int daysInMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);
+        DateTime firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
 
-        for (int i = 1; i <= daysInMonth; i++)
+        for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
         {
-            DateTime currentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, i);
-
-            if (currentDate.DayOfWeek == DayOfWeek.Saturday || currentDate.DayOfWeek == DayOfWeek.Sunday || !zileCantina.Keys.Contains(currentDate.Date.ToString()))
+            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday || !zileCantina.ContainsKey(date.ToString("yyyy-MM-dd")))
             {
-                Events[currentDate] = "";
+                _events[date] = new List<EventModel> { new EventModel { Name = "", Description = "" } };
             }
         }
+
+        // Refresh UI
+        OnPropertyChanged(nameof(Events));
     }
 
-    private void ToggleEventOnDate(DateTime date)
+    private async void OnDayTapped(DateTime date)
     {
         if (Events.ContainsKey(date))
         {
-            Events.Remove(date); 
+            Events.Remove(date);  // Remove event if it was already added
         }
         else
         {
-            Events[date] = ""; 
+            Events[date] = new List<EventModel> { new EventModel { Name = "", Description = "" } }; // Add event
         }
+        SelectedDates = tempDates;
     }
+    
 
-    public async Task UpdateZileCantinaInDatabase()
+    private async Task UpdateCalendar()
     {
         Dictionary<string, int> zileCantinaToSave = new();
 
         foreach (var date in SelectedDates)
         {
-            if (!Events.ContainsKey(date)) 
+            if (!Events.ContainsKey(date))
             {
                 zileCantinaToSave[date.ToString("yyyy-MM-dd")] = 0;
             }
@@ -101,4 +129,10 @@ public class CalendarCantinaModelView : ObservableObject
 
         await _firestoreService.UpdateAdminZileCantina(zileCantinaToSave);
     }
+
+    protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+    }
 }
+
