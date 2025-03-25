@@ -6,7 +6,7 @@ public class CalendarCantinaModelView : ObservableObject
 {
     private readonly FirestoreService _firestoreService;
 
-
+    Dictionary<string, int> zileCantina = new Dictionary<string, int>();
 
     private ObservableCollection<DateTime> _selectedDates;
     public ObservableCollection<DateTime> SelectedDates
@@ -44,7 +44,7 @@ public class CalendarCantinaModelView : ObservableObject
 
     private async Task LoadZileCantinaFromDatabase()
     {
-        var zileCantina = await FirestoreService.GetAdminZileCantina();
+        zileCantina = await FirestoreService.GetAdminZileCantina();
 
         if (zileCantina != null)
         {
@@ -68,7 +68,7 @@ public class CalendarCantinaModelView : ObservableObject
         {
             DateTime currentDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, i);
 
-            if (currentDate.DayOfWeek == DayOfWeek.Saturday || currentDate.DayOfWeek == DayOfWeek.Sunday )
+            if (currentDate.DayOfWeek == DayOfWeek.Saturday || currentDate.DayOfWeek == DayOfWeek.Sunday || !zileCantina.Keys.Contains(currentDate.Date.ToString()))
             {
                 Events[currentDate] = "";
             }
