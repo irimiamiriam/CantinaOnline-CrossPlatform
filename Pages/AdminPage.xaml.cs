@@ -54,5 +54,6 @@ public partial class AdminPage : ContentPage
     private void cameraView_BarcodeDetected(object sender, BarcodeEventArgs args)
     {
 
+
     }
 }
