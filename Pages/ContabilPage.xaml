@@ -6,6 +6,16 @@
     <Grid>
         <StackLayout VerticalOptions="Center" WidthRequest="300" HorizontalOptions="Center" Spacing="10">
 
+            <Button Text="Calendar cantina" 
+      FontSize="18" 
+      HorizontalOptions="FillAndExpand" 
+      VerticalOptions="FillAndExpand"  
+      BackgroundColor="#007AFF" 
+      TextColor="Black" 
+      Padding="20,10"
+                   Clicked="Button_Clicked_1"
+   />
+
             <!-- Elev nou Button -->
             <Button Text="Elev nou" 
                  FontSize="18" 
@@ -24,17 +34,10 @@
                  BackgroundColor="#007AFF" 
                  TextColor="Black" 
                  Padding="20,10"
+                    Clicked="Button_Clicked"
               />
 
-            <!-- Lista elevi Button -->
-            <Button Text="Lista elevi" 
-                 FontSize="18" 
-                 HorizontalOptions="FillAndExpand" 
-                 VerticalOptions="Center" 
-                 BackgroundColor="#007AFF" 
-                 TextColor="Black" 
-                 Padding="20,10"
-              />
+           
         </StackLayout>
     </Grid>
 </ContentPage>

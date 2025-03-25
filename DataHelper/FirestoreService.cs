@@ -286,5 +286,126 @@ public class FirestoreService
 
     }
 
+    public static async Task<List<ElevModel>> GetUsersByClass(string selectedClass)
+    {
+        try
+        {
+            CollectionReference usersRef = _db.Collection("Users");
+            Query query = usersRef.WhereEqualTo("Clasa", selectedClass);
+            QuerySnapshot snapshot = await query.GetSnapshotAsync();
+
+            List<ElevModel> students = new();
+            foreach (var doc in snapshot.Documents)
+            {
+                Dictionary<string, int> zilePlatite = doc.ContainsField("ZilePlatite")
+                    ? doc.GetValue<Dictionary<string, int>>("ZilePlatite")
+                    : new Dictionary<string, int>();
+
+                students.Add(new ElevModel
+                {
+                    Id = Convert.ToInt32(doc.Id),
+                    Nume = doc.GetValue<string>("Nume"),
+                    Clasa = doc.GetValue<string>("Clasa"),
+                    ZilePlatite = zilePlatite.ToDictionary(
+                        kvp => DateTime.Parse(kvp.Key).Date,
+                        kvp => kvp.Value
+                    )
+                });
+            }
+
+            return students;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error fetching students: {ex.Message}");
+            return new List<ElevModel>();
+        }
+    }
+    public static async Task<Dictionary<string, int>> GetAdminZileCantina()
+    {
+        try
+        {
+            // Access the "Admins" collection and filter by Rol = "contabil"
+            var adminsRef = _db.Collection("Admins");
+            var query = adminsRef.WhereEqualTo("Rol", "Contabil");
+
+            var snapshot = await query.GetSnapshotAsync();
+
+            if (snapshot.Documents.Count == 0)
+            {
+                Console.WriteLine("No admin found with Rol = 'contabil'");
+                return null;
+            }
+
+            var adminDoc = snapshot.Documents[0]; // Assuming there is only one document where Rol = "contabil"
+
+            // Fetch ZileCantina as a dictionary from the admin document
+            var zileCantinaMap = adminDoc.ContainsField("ZileCantina")
+                ? adminDoc.GetValue<Dictionary<string, int>>("ZileCantina")
+                : new Dictionary<string, int>();
+
+            return zileCantinaMap; // Keep it as Dictionary<string, int>
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error retrieving ZileCantina: {ex.Message}");
+            return null;
+        }
+    }
+
+    public static async Task UpdateUserZilePlatite(int userId, Dictionary<string, int> zileCantina)
+    {
+        try
+        {
+            DocumentReference userDoc = _db.Collection("Users").Document(userId.ToString());
+            DocumentSnapshot snapshot = await userDoc.GetSnapshotAsync();
+
+            if (!snapshot.Exists) return;
+
+            // Replace ZilePlatite with Admin's ZileCantina
+            await userDoc.UpdateAsync(new Dictionary<string, object>
+        {
+            { "ZilePlatite", zileCantina }
+        });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating user's ZilePlatite: {ex.Message}");
+        }
+    }
+    public async Task UpdateAdminZileCantina(Dictionary<string, int> zileCantina)
+    {
+        try
+        {
+            // Get the Admin document where Rol = "contabil"
+            var adminsRef = _db.Collection("Admins");
+            var query = adminsRef.WhereEqualTo("Rol", "Contabil");
+            var snapshot = await query.GetSnapshotAsync();
+
+            if (snapshot.Documents.Count == 0)
+            {
+                Console.WriteLine("No contabil admin found.");
+                return;
+            }
+
+            var adminDoc = snapshot.Documents[0].Reference;
+
+            await adminDoc.UpdateAsync(new Dictionary<string, object>
+        {
+            { "ZileCantina", zileCantina }
+        });
+
+            Console.WriteLine("ZileCantina updated successfully!");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating ZileCantina: {ex.Message}");
+        }
+    }
+
+
+
+
+
 }
 

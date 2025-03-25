@@ -10,6 +10,7 @@ namespace CantinaOnline.Models
     {
         public int Id { get; set; }
         public string Nume { get; set; }
+        public string Clasa { get; set; }
         public Dictionary<DateTime,int> ZilePlatite { get;set; }
     }
 }
