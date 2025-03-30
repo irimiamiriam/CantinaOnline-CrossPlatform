@@ -86,10 +86,10 @@ public class CalendarCantinaModelView : INotifyPropertyChanged
 
     private void MarkWeekendsAsEvents()
     {
-        DateTime firstDayOfMonth = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
-        DateTime lastDayOfMonth = firstDayOfMonth.AddMonths(1).AddDays(-1);
+        DateTime firstDay = DateTime.Parse(zileCantina.Keys.Min());
+        DateTime lastDay = DateTime.Parse(zileCantina.Keys.Max());
 
-        for (DateTime date = firstDayOfMonth; date <= lastDayOfMonth; date = date.AddDays(1))
+        for (DateTime date = firstDay; date <= lastDay; date = date.AddDays(1))
         {
             if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday || !zileCantina.ContainsKey(date.ToString("yyyy-MM-dd")))
             {

@@ -81,7 +81,7 @@ public class ElevPageViewModel : INotifyPropertyChanged
         DateTime dataInceput = _user.ZilePlatite.Keys.Min();
         DateTime dataFinal = _user.ZilePlatite.Keys.Max();
 
-        while (dataInceput.Date != dataFinal.Date)
+        while (dataInceput.Date != dataFinal.Date.AddDays(1))
         {
           
             try
@@ -103,65 +103,71 @@ public class ElevPageViewModel : INotifyPropertyChanged
 
     private async void OnDayTapped(DateTime dateTapped)
     {
-
-        if (dateTapped.Date >=DateTime.Now.Date&& dateTapped.DayOfWeek!=DayOfWeek.Saturday&& dateTapped.DayOfWeek != DayOfWeek.Sunday)
+        try
         {
-            if (_user.ZilePlatite.Where(d => d.Key.Date == dateTapped.Date).First().Value == 0)
+            if (dateTapped.Date >= DateTime.Now.Date && dateTapped.DayOfWeek != DayOfWeek.Saturday && dateTapped.DayOfWeek != DayOfWeek.Sunday)
             {
-                bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmare", "Adaugă restanță?", "Da", "Nu");
 
-                if (confirm)
+                if (_user.ZilePlatite.Where(d => d.Key.Date == dateTapped.Date).First().Value == 0)
                 {
-                    if (DateTime.Now.Date == dateTapped.Date && DateTime.Now.Hour >= 8)
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Alerta", "Nu puteti adauga restanta dupa ora 8", "Cancel");
-                    }
+                    bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmare", "Adaugă restanță?", "Da", "Nu");
 
-                    else
+                    if (confirm)
                     {
-                        FirestoreService.UpdateZilePlatite(dateTapped, _user, 1);
-
-                        if (!_events.ContainsKey(dateTapped))
+                        if (DateTime.Now.Date == dateTapped.Date && DateTime.Now.Hour >= 8)
                         {
-                            _events[dateTapped] = new List<EventModel>();
+                            await Application.Current.MainPage.DisplayAlert("Alerta", "Nu puteti adauga restanta dupa ora 8", "Cancel");
                         }
 
-                        _events[dateTapped] = new List<EventModel> { new EventModel { Name = "", Description = "" } };
-                        _user.ZilePlatite[dateTapped] = 1;
-                    }
-
-                }
-
-
-            }
-            else
-            {
-                bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmare", "Anuleaza restanță?", "Da", "Nu");
-                if (confirm)
-                {
-                    if (DateTime.Now.Date == dateTapped.Date && DateTime.Now.Hour > 8)
-                    {
-                        await Application.Current.MainPage.DisplayAlert("Alerta", "Nu puteti anula restanta dupa ora 8", "Cancel");
-
-                    }
-                    else
-                    {
-                        if (Events.ContainsKey(dateTapped))
+                        else
                         {
-                            Events.Remove(dateTapped);
-                        }
-                        _user.ZilePlatite[dateTapped] = 0;
-                        FirestoreService.UpdateZilePlatite(dateTapped, _user, 0);
+                            FirestoreService.UpdateZilePlatite(dateTapped, _user, 1);
 
+                            if (!_events.ContainsKey(dateTapped))
+                            {
+                                _events[dateTapped] = new List<EventModel>();
+                            }
+
+                            _events[dateTapped] = new List<EventModel> { new EventModel { Name = "", Description = "" } };
+                            _user.ZilePlatite[dateTapped] = 1;
+                        }
 
                     }
 
 
                 }
+                else
+                {
+                    bool confirm = await Application.Current.MainPage.DisplayAlert("Confirmare", "Anuleaza restanță?", "Da", "Nu");
+                    if (confirm)
+                    {
+                        if (DateTime.Now.Date == dateTapped.Date && DateTime.Now.Hour > 8)
+                        {
+                            await Application.Current.MainPage.DisplayAlert("Alerta", "Nu puteti anula restanta dupa ora 8", "Cancel");
 
+                        }
+                        else
+                        {
+                            if (Events.ContainsKey(dateTapped))
+                            {
+                                Events.Remove(dateTapped);
+                            }
+                            _user.ZilePlatite[dateTapped] = 0;
+                            FirestoreService.UpdateZilePlatite(dateTapped, _user, 0);
+
+
+                        }
+
+
+                    }
+
+
+                }
 
             }
-
+        }
+        catch
+        {
         }
             SelectedDates = _user.ZilePlatite.Keys.ToList();
 
