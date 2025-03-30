@@ -19,14 +19,22 @@ namespace CantinaOnline.ViewModels
         [ObservableProperty]
         private string connectionStatus;
 
+        [ObservableProperty]
+        private bool rememberMeChecked;
+
         public ICommand LoginCommand { get; }
 
         public MainPageViewModel(FirestoreService firestore, bool isConnected)
         {
             _firestore = firestore;
             ConnectionStatus = isConnected ? string.Empty : "Connection failed!";
-
+            var passSaved = SecureStorage.GetAsync("userpass");
+            if (passSaved != null)
+            {
+                PasswordInput = passSaved.Result;
+            }
             LoginCommand = new AsyncRelayCommand(LoginAsync);
+           
         }
 
         private async Task LoginAsync()
@@ -39,15 +47,30 @@ namespace CantinaOnline.ViewModels
 
             if (user != null)
             {
+              if (RememberMeChecked)
+                {
+                    await SecureStorage.SetAsync("userpass", PasswordInput);
+                }
+
                 await Application.Current.MainPage.Navigation.PushAsync(new ElevPage(user));
             }
             else if (admin != null)
             {
+                if (RememberMeChecked)
+                {
+                    await SecureStorage.SetAsync("userpass", PasswordInput);
+                }
+
                 Page nextPage = admin.Rol == "Contabil" ? new ContabilPage() : new AdminPage(_firestore);
                 await Application.Current.MainPage.Navigation.PushAsync(nextPage);
             }
             else
             {
+                if (RememberMeChecked)
+                {
+                    await SecureStorage.SetAsync("userpass", PasswordInput);
+                }
+
                 await Application.Current.MainPage.DisplayAlert("Error", "Parola greșită, încercați din nou!", "OK");
             }
         }

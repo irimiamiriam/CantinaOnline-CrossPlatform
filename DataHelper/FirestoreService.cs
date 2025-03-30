@@ -138,51 +138,7 @@ public class FirestoreService
     }
 
 
-    //public static async Task UpdateUserZilePlatite()
-    //{
-    //    try
-    //    {
-
-
-
-    //        CollectionReference usersRef = _db.Collection("Users");
-    //        Query query = usersRef.WhereEqualTo("Parola", "miriam100");
-    //        QuerySnapshot snapshot = await query.GetSnapshotAsync();
-
-
-
-    //        DocumentReference userDoc = snapshot.Documents[0].Reference;
-
-    //        // Generate all weekdays for Martie
-    //        Dictionary<string, int> zilePlatite = new Dictionary<string, int>();
-    //        int year = DateTime.Now.Year; 
-    //        int month = 3;
-
-    //        int daysInMonth = DateTime.DaysInMonth(year, month);
-    //        for (int day = 1; day <= daysInMonth; day++)
-    //        {
-    //            DateTime date = new DateTime(year, month, day);
-
-    //            // Skip Sambt&Dum
-    //            if (date.DayOfWeek != DayOfWeek.Saturday && date.DayOfWeek != DayOfWeek.Sunday)
-    //            {
-    //                zilePlatite[date.ToString("dd-MM-yyyy")] = 0;
-    //            }
-    //        }
-
-    //        // Update Firestore document
-    //        await userDoc.UpdateAsync(new Dictionary<string, object>
-    //    {
-    //        { "ZilePlatite", zilePlatite }
-    //    });
-
-
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        Console.WriteLine($" Error updating user: {ex.Message}");
-    //    }
-    //}
+   
     public static async Task UpdateZilePlatite(DateTime selectedDate, ElevModel user, int value)
     {
         try
@@ -274,7 +230,8 @@ public class FirestoreService
                     ZilePlatite = zilePlatite.ToDictionary(
                         kvp => DateTime.Parse(kvp.Key).Date,
                         kvp => kvp.Value
-                    )
+                    ),
+                    LastScan = snapshot.GetValue<string>("LastScan")
                 };
             }
             catch (Exception ex)
@@ -373,7 +330,7 @@ public class FirestoreService
             Console.WriteLine($"Error updating user's ZilePlatite: {ex.Message}");
         }
     }
-    public async Task UpdateAdminZileCantina(Dictionary<string, int> zileCantina)
+    public static async Task UpdateAdminZileCantina(Dictionary<string, int> zileCantina)
     {
         try
         {
@@ -403,9 +360,33 @@ public class FirestoreService
         }
     }
 
-
-
-
+    internal static async Task AddUser(ElevModel user, Dictionary<string, int> zileCantina)
+    {
+        DocumentReference userDoc = _db.Collection("Users").Document(user.Id.ToString());
+        await userDoc.SetAsync(new
+        {
+            Nume = user.Nume,
+            Clasa = user.Clasa,
+            Parola = user.Parola,
+            LastScan = "",
+            ZilePlatite = zileCantina
+        });
+    }
+    public static async Task UpdateUserLastScan(string userId, string lastScanDate)
+    {
+        try
+        {
+            DocumentReference userDoc = _db.Collection("Users").Document(userId);
+            await userDoc.UpdateAsync(new Dictionary<string, object>
+        {
+            { "LastScan", lastScanDate } // Update the LastScan field with today's date
+        });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error updating LastScan: {ex.Message}");
+        }
+    }
 
 }
 

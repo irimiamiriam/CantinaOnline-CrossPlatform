@@ -127,7 +127,7 @@ public class CalendarCantinaModelView : INotifyPropertyChanged
             }
         }
 
-        await _firestoreService.UpdateAdminZileCantina(zileCantinaToSave);
+        await FirestoreService.UpdateAdminZileCantina(zileCantinaToSave);
     }
 
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

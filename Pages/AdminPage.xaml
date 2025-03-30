@@ -5,7 +5,7 @@
              x:Class="CantinaOnline.Pages.AdminPage"
              Title="AdminPage"
              NavigationPage.HasNavigationBar="True">
-
+    
     <VerticalStackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
         <Label Text="{Binding UsersEatingToday, StringFormat='Număr utilizatori care mănâncă azi: {0}'}"
                FontSize="20"
