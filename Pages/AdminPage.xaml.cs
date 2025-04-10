@@ -17,7 +17,9 @@ public partial class AdminPage : ContentPage
         InitializeComponent();
         _firestoreService = firestoreService;
         _viewModel = new AdminPageViewModel();
-          BindingContext = _viewModel;
+
+
+        BindingContext = _viewModel;
 
         cameraView.BarCodeDecoder = new ZXingBarcodeDecoder();
         cameraView.BarCodeOptions = new BarcodeDecodeOptions
@@ -33,6 +35,7 @@ public partial class AdminPage : ContentPage
         cameraView.ControlBarcodeResultDuplicate = true;
         cameraView.BarCodeDetectionEnabled = true;
        
+        NavigationPage.SetHasNavigationBar(this, false);
 
     }
 
@@ -60,10 +63,19 @@ public partial class AdminPage : ContentPage
             if (user != null)
             {
                 DateTime today = DateTime.Now.Date;
-                bool isPaid = user.ZilePlatite.ContainsKey(today) && user.ZilePlatite[today] == 0;
-                string message = isPaid ? "Utilizatorul a platit" : "Utilizatorul nu a platit";
-                barcodeResult.Text = message;
+                if (user.LastScan == today.ToString("yyyy-MM-dd"))
+                {
+                    barcodeResult.Text = "Deja scanat azi!"; 
+                }
+                else
+                {
+                    bool isPaid = user.ZilePlatite.ContainsKey(today) && user.ZilePlatite[today] == 0;
+                    string message = isPaid ? "Utilizatorul a platit" : "Utilizatorul nu a platit";
+                    barcodeResult.Text = message;
 
+                    user.LastScan = today.ToString("yyyy-MM-dd");
+                    await FirestoreService.UpdateUserLastScan(user.Id.ToString(), user.LastScan);
+                }
 
             }
             else

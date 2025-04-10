@@ -10,15 +10,15 @@ namespace CantinaOnline
 
         public App(FirestoreService firestore)
         {
-            InitializeComponent();
+         //   InitializeComponent();
             this.firestore = firestore;
 
             // Initialize with a temporary page while checking connection
             _mainWindow = new Window(new ContentPage
             {
                 Content = new ActivityIndicator { IsRunning = true }
+                
             });
-
             // Start connection check
             CheckConnection();
         }
@@ -34,11 +34,10 @@ namespace CantinaOnline
 
             bool isConnected = IsConnectedToInternet() && firestore.CheckConnection();
 
-            // Update the window's page on the main thread
-            Dispatcher.Dispatch(() =>
-            {
+           
                 _mainWindow.Page = new NavigationPage(new MainPage(isConnected, firestore));
-            });
+             
+
         }
 
         private bool IsConnectedToInternet()

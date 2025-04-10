@@ -14,5 +14,8 @@ public partial class MainPage : ContentPage
 
 		InitializeComponent();
 		BindingContext = new MainPageViewModel(firestore, isConnected);
-	}
+        NavigationPage.SetHasNavigationBar(this, false);
+
+
+    }
 }

@@ -12,8 +12,12 @@ public partial class ElevPage : ContentPage
     public ElevPage(ElevModel user)
     {
         InitializeComponent();
+        NavigationPage.SetHasNavigationBar(this, false);
 
-        BindingContext = new ElevPageViewModel(user);
+
+        var vm = new ElevPageViewModel(user);
+        BindingContext = vm;
+        
 
 
     }

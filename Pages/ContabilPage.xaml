@@ -7,33 +7,38 @@
         <StackLayout VerticalOptions="Center" WidthRequest="300" HorizontalOptions="Center" Spacing="10">
 
             <Button Text="Calendar cantina" 
-      FontSize="18" 
+      FontSize="18" FontFamily="Rony"
       HorizontalOptions="FillAndExpand" 
       VerticalOptions="FillAndExpand"  
       BackgroundColor="#007AFF" 
       TextColor="Black" 
       Padding="20,10"
+                    CornerRadius="12"
                    Clicked="Button_Clicked_1"
    />
 
             <!-- Elev nou Button -->
             <Button Text="Elev nou" 
-                 FontSize="18" 
+                 FontSize="18" FontFamily="Rony"
                  HorizontalOptions="FillAndExpand" 
                  VerticalOptions="FillAndExpand"  
                  BackgroundColor="#007AFF" 
+                    Clicked="Button_Clicked_2"
                  TextColor="Black" 
                  Padding="20,10"
+                    			CornerRadius="12"
+
               />
 
             <!-- Plata noua Button -->
             <Button Text="Plata noua" 
-                 FontSize="18" 
+                 FontSize="18" FontFamily="Rony"
                  HorizontalOptions="FillAndExpand" 
                  VerticalOptions="Center" 
                  BackgroundColor="#007AFF" 
                  TextColor="Black" 
                  Padding="20,10"
+                CornerRadius="12"
                     Clicked="Button_Clicked"
               />
 

@@ -3,7 +3,8 @@
 			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
 			 x:Class="CantinaOnline.Pages.MainPage"
-			 Title="MainPage">
+			 Title="MainPage"
+          >
 
 	<VerticalStackLayout Spacing="0" Padding="20" BackgroundColor="White">
 		
@@ -31,7 +32,7 @@
 			HorizontalOptions="Start"
 			Padding="5"
 			StrokeShape="RoundRectangle 12">
-			<Entry Placeholder="Password" 
+			<Entry Placeholder="Introdu parola.." 
                    x:Name="passwordInput"
                    Text="{Binding PasswordInput}"
 				FontFamily="Rony"
@@ -43,12 +44,12 @@
 
 		<!-- Remember Me Checkbox -->
 		<HorizontalStackLayout Spacing="10">
-			<CheckBox x:Name="RememberMeCheckBox"/>
+            <CheckBox x:Name="RememberMeCheckBox"  IsChecked="{Binding RememberMeChecked}"/>
 			<Label Text="Ține-mă minte" VerticalOptions="Center"/>
 		</HorizontalStackLayout>
 
 		<!-- Login Buttons -->
-		<Button Text="Login"
+		<Button Text="Intră în cont"
 			FontAttributes="Bold"
 			FontFamily="Rony"
 			HeightRequest="48"

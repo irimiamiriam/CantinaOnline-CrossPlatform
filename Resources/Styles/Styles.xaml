@@ -389,6 +389,7 @@
 
     <Style TargetType="TitleBar">
         <Setter Property="MinimumHeightRequest" Value="32"/>
+
         <Setter Property="VisualStateManager.VisualStateGroups">
             <VisualStateGroupList>
                 <VisualStateGroup x:Name="TitleActiveStates">
@@ -415,6 +416,7 @@
     </Style>
 
     <Style TargetType="Shell" ApplyToDerivedTypes="True">
+        
         <Setter Property="Shell.BackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource OffBlack}}" />
         <Setter Property="Shell.ForegroundColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource SecondaryDarkText}}" />
         <Setter Property="Shell.TitleColor" Value="{AppThemeBinding Light={StaticResource Black}, Dark={StaticResource SecondaryDarkText}}" />
@@ -434,6 +436,7 @@
     </Style>
 
     <Style TargetType="TabbedPage">
+        <Setter  Property="IsVisible" Value="False"></Setter>
         <Setter Property="BarBackgroundColor" Value="{AppThemeBinding Light={StaticResource White}, Dark={StaticResource Gray950}}" />
         <Setter Property="BarTextColor" Value="{AppThemeBinding Light={StaticResource Magenta}, Dark={StaticResource White}}" />
         <Setter Property="UnselectedTabColor" Value="{AppThemeBinding Light={StaticResource Gray200}, Dark={StaticResource Gray950}}" />

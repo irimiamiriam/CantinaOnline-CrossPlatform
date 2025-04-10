@@ -94,6 +94,9 @@
 	  <MauiXaml Update="Pages\ContabilPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
+	  <MauiXaml Update="Pages\ElevNouPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
 	  <MauiXaml Update="Pages\ElevPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>

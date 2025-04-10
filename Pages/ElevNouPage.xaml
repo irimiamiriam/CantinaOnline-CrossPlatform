@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CantinaOnline.Pages.ElevNouPage"
+             Title="ElevNouPage">
+    <VerticalStackLayout Padding="20" Spacing="15">
+
+        <Label Text="Nume:" FontSize="18" FontFamily="Rony"/>
+        <Entry Text="{Binding NumeElev}" Placeholder="Introdu numele..." FontSize="18"/>
+
+        <Label Text="Clasa:" FontSize="18" FontFamily="Rony"/>
+        <Picker ItemsSource="{Binding Classes}" SelectedItem="{Binding SelectedClass}" FontSize="18"/>
+
+        <Label Text="Parola:" FontSize="18" FontFamily="Rony"/>
+        <Entry Text="{Binding GeneratedPassword}" IsReadOnly="True" FontSize="18"/>
+
+        <Label Text="ID:" FontSize="18" FontFamily="Rony"/>
+        <Entry Text="{Binding GeneratedId}" IsReadOnly="True" FontSize="18"/>
+
+        <Button Text="Generează Parola și ID" Command="{Binding GenerateCredentialsCommand}" FontFamily="Rony" BackgroundColor="#007AFF" TextColor="White" />
+        <Button Text="Adauga Elev" Command="{Binding AddElevCommand}" BackgroundColor="#007AFF"  FontFamily="Rony"  TextColor="White"/>
+
+    </VerticalStackLayout>
+</ContentPage>

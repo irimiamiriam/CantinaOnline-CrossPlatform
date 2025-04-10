@@ -32,8 +32,34 @@ public class PlataPageViewModel : ObservableObject
     public PlataPageViewModel()
     {
         AddToZilePlatiteCommand = new RelayCommand<int>(async (userId) => {
-            await SyncZilePlatiteWithAdmin(userId);
+            await ShowConfirmationDialog(userId);
         });
+    }
+    private async Task ShowConfirmationDialog(int userId)
+    {
+        var user = await FirestoreService.GetUserById(userId.ToString());
+        if (user == null) return;
+
+        // Get admin's ZileCantina
+        Dictionary<string, int> adminZileCantina = await FirestoreService.GetAdminZileCantina();
+        if (adminZileCantina == null || adminZileCantina.Count == 0) return;
+
+        // Calculate remaining days (Restante)
+        int restante = user.ZilePlatite.Values.Count(v => v == 1);
+        int totalCost = adminZileCantina.Count * 18;
+
+        // Show confirmation popup
+        bool confirm = await Application.Current.MainPage.DisplayAlert(
+            "Confirmare",
+            $"Restante: {restante} zile\nTotal: {totalCost-restante*18} RON\nDoriți să actualizați zilele plătite?",
+            "OK",
+            "Anulează"
+        );
+
+        if (confirm)
+        {
+            await SyncZilePlatiteWithAdmin(user.Id);
+        }
     }
 
     private async void LoadStudents()
