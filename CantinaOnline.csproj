@@ -85,7 +85,16 @@
 	</ItemGroup>
 
 	<ItemGroup>
+	  <Compile Update="Pages\ScanPage.xaml.cs">
+	    <DependentUpon>ScanPage.xaml</DependentUpon>
+	  </Compile>
+	</ItemGroup>
+
+	<ItemGroup>
 	  <MauiXaml Update="Pages\AdminPage.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\ScanPage.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\CalendarCantinaPage.xaml">

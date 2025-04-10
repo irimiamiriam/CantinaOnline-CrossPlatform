@@ -1,28 +1,21 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-            xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
              x:Class="CantinaOnline.Pages.AdminPage"
-             Title="AdminPage"
-             NavigationPage.HasNavigationBar="True">
+             Title="AdminPage">
+    <Grid>
+        <VerticalStackLayout VerticalOptions="Center" WidthRequest="300" HorizontalOptions="Center" Spacing="10">
+            <Button Text="Elev nou" 
+                 FontSize="18" FontFamily="Rony"
+                 HorizontalOptions="FillAndExpand" 
+                 VerticalOptions="FillAndExpand"  
+                 BackgroundColor="#007AFF" 
+                 TextColor="Black" 
+                 Padding="20,10"
+                 CornerRadius="12"
+                 Clicked="Button_Clicked_1"
+/>
+        </VerticalStackLayout>
+    </Grid>
     
-    <VerticalStackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
-        <Label Text="{Binding UsersEatingToday, StringFormat='Număr utilizatori care mănâncă azi: {0}'}"
-               FontSize="20"
-               FontAttributes="Bold"
-               TextColor="Black"
-               HorizontalOptions="Center"/>
-      
-        <cv:CameraView x:Name="cameraView"
-                          CamerasLoaded="cameraView_CamerasLoaded"
-                          BarcodeDetected="cameraView_BarcodeDetected"
-                          BarCodeDetectionEnabled="True"
-                          HeightRequest="300" />
-        <Label x:Name="barcodeResult"></Label>
-        
-       
-
-
-        
-    </VerticalStackLayout>
 </ContentPage>

@@ -9,10 +9,10 @@ namespace CantinaOnline.Models
     public class ElevModel
     {
         public int Id { get; set; }
-        public string Nume { get; set; }
-        public string Clasa { get; set; }
-        public string Parola { get; set; }
-        public Dictionary<DateTime,int> ZilePlatite { get;set; }
-        public string LastScan { get; set; }
+        public string Nume { get; set; } = string.Empty;
+        public string Clasa { get; set; } = string.Empty;
+        public string Parola { get; set; } = string.Empty;
+        public Dictionary<DateTime,int> ZilePlatite { get;set; } = new();
+        public string LastScan { get; set; } = string.Empty;
     }
 }

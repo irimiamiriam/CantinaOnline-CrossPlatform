@@ -43,6 +43,7 @@ namespace CantinaOnline.ViewModels
                 return;
 
             ElevModel? user = await _firestore.GetElevByPassword(PasswordInput);
+            ScanModel? scan = await _firestore.GetScanByPassword(PasswordInput);
             AdminModel? admin = await _firestore.GetAdminByPassword(PasswordInput);
 
             if (user != null)
@@ -54,14 +55,14 @@ namespace CantinaOnline.ViewModels
 
                 await Application.Current.MainPage.Navigation.PushAsync(new ElevPage(user));
             }
-            else if (admin != null)
+            else if (scan != null)
             {
                 if (RememberMeChecked)
                 {
                     await SecureStorage.SetAsync("userpass", PasswordInput);
                 }
 
-                Page nextPage = admin.Rol == "Contabil" ? new ContabilPage() : new AdminPage(_firestore);
+                Page nextPage = scan.Rol == "Contabil" ? new ContabilPage() : new ScanPage(_firestore);
                 await Application.Current.MainPage.Navigation.PushAsync(nextPage);
             }
             else
@@ -71,7 +72,7 @@ namespace CantinaOnline.ViewModels
                     await SecureStorage.SetAsync("userpass", PasswordInput);
                 }
 
-                await Application.Current.MainPage.DisplayAlert("Error", "Parola greșită, încercați din nou!", "OK");
+                await Application.Current.MainPage.DisplayAlert("Eroare", "Parola greșită, încercați din nou!", "OK");
             }
         }
     }

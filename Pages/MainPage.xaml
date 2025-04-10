@@ -49,7 +49,7 @@
 		</HorizontalStackLayout>
 
 		<!-- Login Buttons -->
-		<Button Text="Intră în cont"
+        <Button Text="Intră în cont"
 			FontAttributes="Bold"
 			FontFamily="Rony"
 			HeightRequest="48"
@@ -58,9 +58,8 @@
 			CornerRadius="12"
 			Margin="20,0,20,0"
 			HorizontalOptions="Fill"
-           Command="{Binding LoginCommand}"/>
+            Command="{Binding LoginCommand}"/>
 
-		
 
-	</VerticalStackLayout>
+    </VerticalStackLayout>
 </ContentPage>
