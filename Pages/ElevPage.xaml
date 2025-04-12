@@ -28,12 +28,17 @@
                                   FirstDayOfWeek="Monday"  
                                  TodayOutlineColor="Transparent"
                                  EventIndicatorType="Background"
-                                 EventIndicatorColor="White"
-                                 EventIndicatorSelectedColor="White"
+                                         EventIndicatorColor="White"   
+                                EventIndicatorSelectedColor="White"
                                  SelectedDayBackgroundColor="Blue"
                                  SelectedDatesRangeBackgroundColor="Blue"
+                                  SwipeUpToHideEnabled="False"
+                                  ShowYearPicker="False"
+                                  FooterArrowVisible="False"
+                                     SelectedDates ="{Binding SelectedDates}"
+
                                  SelectedDayTextColor="White"
-                                              SelectedDates="{Binding SelectedDates}"
+                                            
                                  Events="{Binding Events}"
                                         DayTappedCommand="{Binding DayTappedCommand}"     />
             </Frame>

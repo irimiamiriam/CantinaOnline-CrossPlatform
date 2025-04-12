@@ -7,7 +7,7 @@
              NavigationPage.HasNavigationBar="True">
     
     <VerticalStackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
-        <Label Text="{Binding UsersEatingToday, StringFormat='Număr utilizatori care mănâncă azi: {0}'}"
+        <Label x:Name="labelEating"
                FontSize="20"
                FontAttributes="Bold"
                TextColor="Black"
@@ -17,12 +17,17 @@
                           CamerasLoaded="cameraView_CamerasLoaded"
                           BarcodeDetected="cameraView_BarcodeDetected"
                           BarCodeDetectionEnabled="True"
-                          HeightRequest="300" />
-        <Label x:Name="barcodeResult"></Label>
-        
-       
+                          HeightRequest="600" />
+        <Label x:Name="barcodeResult"  
+    FontSize="32"
+    HorizontalOptions="Center"
+    VerticalOptions="End"
+    TextColor="Red"
+    FontAttributes="Bold"
+    Margin="0,0,0,20" />
 
 
-        
+
+
     </VerticalStackLayout>
 </ContentPage>

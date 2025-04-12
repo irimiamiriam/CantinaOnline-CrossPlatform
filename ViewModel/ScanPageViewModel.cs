@@ -24,7 +24,7 @@ public partial class ScanPageViewModel : ObservableObject
 
     private async void LoadData()
     {
-        UsersEatingToday = await FirestoreService.GetUsersEatingToday();
+        UsersEatingToday = await (new FirestoreService()).GetUsersEatingToday();
     }
 
 }

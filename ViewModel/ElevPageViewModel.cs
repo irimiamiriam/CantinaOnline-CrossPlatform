@@ -9,6 +9,21 @@ using CantinaOnline.Models;
 using Plugin.Maui.Calendar.Models;
 using QRCoder;
 
+public class DayEventCollection<T> : List<T>
+{
+    public Color EventIndicatorColor { get; set; }
+    public Color EventIndicatorSelectedColor { get; set; }
+
+    public DayEventCollection(Color eventIndicatorColor, Color eventIndicatorSelectedColor)
+    {
+        EventIndicatorColor = eventIndicatorColor;
+        EventIndicatorSelectedColor = eventIndicatorSelectedColor;
+    }
+}
+
+
+
+
 public class ElevPageViewModel : INotifyPropertyChanged
 {
     private ElevModel _user;
@@ -59,11 +74,11 @@ public class ElevPageViewModel : INotifyPropertyChanged
     {
         _user = user;
         _events = new EventCollection();
-        SelectedDates = _user.ZilePlatite.Keys.ToList();
+        SelectedDates = user.ZilePlatite.Keys.ToList();
 
         DayTappedCommand = new RelayCommand<DateTime>(OnDayTapped);
-        GenerateQR();
-        RemoveDays();
+       GenerateQR();
+       RemoveDays();
     }
 
     private void GenerateQR()
@@ -89,12 +104,13 @@ public class ElevPageViewModel : INotifyPropertyChanged
                 var dataGasita = _user.ZilePlatite.First(d => d.Key.Date == dataInceput.Date);
                 if (dataGasita.Value == 1||dataInceput.Date<DateTime.Now.Date)
                 {
-                    _events[dataInceput] = new List<EventModel> { new EventModel { Name = "", Description = "" } };
+                    _events[dataInceput] = new DayEventCollection<EventModel>(Colors.Red, Colors.Red) { new() { Name = "", Description = "", Color = Colors.Red } };
                 }
+                
             }
             catch
             {
-                _events[dataInceput] = new List<EventModel> { new EventModel { Name = "", Description = "" } };
+                _events[dataInceput] = new DayEventCollection<EventModel>(Colors.AliceBlue, Colors.AliceBlue) { new EventModel { Name = "", Description = "" } };
             }  
             dataInceput = dataInceput.AddDays(1);
         }

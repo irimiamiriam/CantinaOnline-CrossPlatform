@@ -30,6 +30,10 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
+        <Button Text="Adauga plata pentru toată clasa"
+        BackgroundColor="Green"
+        TextColor="White"
+        Margin="10,20,10,0"
+        Command="{Binding PayForClassCommand}" />
     </StackLayout>
 </ContentPage>

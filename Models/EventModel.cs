@@ -12,5 +12,6 @@ public class EventModel
     public string Description { get; set; } = string.Empty;
     public DateTime StartTime { get; set; }
     public DateTime EndTime { get; set; }
+    public Color Color { get; set; }
 }
 

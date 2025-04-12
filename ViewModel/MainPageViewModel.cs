@@ -43,27 +43,37 @@ namespace CantinaOnline.ViewModels
                 return;
 
             ElevModel? user = await _firestore.GetElevByPassword(PasswordInput);
-            ScanModel? scan = await _firestore.GetScanByPassword(PasswordInput);
+         //   ScanModel? scan = await _firestore.GetScanByPassword(PasswordInput);
             AdminModel? admin = await _firestore.GetAdminByPassword(PasswordInput);
 
             if (user != null)
-            {
-              if (RememberMeChecked)
-                {
-                    await SecureStorage.SetAsync("userpass", PasswordInput);
-                }
-
-                await Application.Current.MainPage.Navigation.PushAsync(new ElevPage(user));
-            }
-            else if (scan != null)
             {
                 if (RememberMeChecked)
                 {
                     await SecureStorage.SetAsync("userpass", PasswordInput);
                 }
 
-                Page nextPage = scan.Rol == "Contabil" ? new ContabilPage() : new ScanPage(_firestore);
-                await Application.Current.MainPage.Navigation.PushAsync(nextPage);
+                await Application.Current.MainPage.Navigation.PushAsync(new ElevPage(user));
+            }
+            else if (admin != null)
+            {
+                if (RememberMeChecked)
+                {
+                    await SecureStorage.SetAsync("userpass", PasswordInput);
+                }
+
+                Page nextPage = new Page();
+                if (admin.Rol == "Contabil")
+                {
+                    nextPage = new ContabilPage();
+                } else if (admin.Rol == "Administrator")
+                {
+                    nextPage = new AdminPage();
+                }else
+                {
+                    nextPage = new ScanPage(_firestore);
+                }
+                    await Application.Current.MainPage.Navigation.PushAsync(nextPage);
             }
             else
             {

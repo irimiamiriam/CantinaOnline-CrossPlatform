@@ -210,7 +210,7 @@ public class FirestoreService
     
     }
 
-    public static async Task<int> GetUsersEatingToday()
+    public async Task<int> GetUsersEatingToday()
     {
         try
         {

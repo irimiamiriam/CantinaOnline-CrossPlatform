@@ -11,15 +11,16 @@ public partial class ScanPage : ContentPage
 {
     private ScanPageViewModel _viewModel;
     private FirestoreService _firestoreService;
+    int eatingToday;
 
     public ScanPage(FirestoreService firestoreService)
     {
         InitializeComponent();
         _firestoreService = firestoreService;
-        _viewModel = new ScanPageViewModel();
+        //  _viewModel = new ScanPageViewModel();
+        //        BindingContext = _viewModel;
 
-
-        BindingContext = _viewModel;
+        GetUserEating();
 
         cameraView.BarCodeDecoder = new ZXingBarcodeDecoder();
         cameraView.BarCodeOptions = new BarcodeDecodeOptions
@@ -39,7 +40,13 @@ public partial class ScanPage : ContentPage
 
     }
 
-  
+    private async void GetUserEating()
+    {
+        eatingToday= await _firestoreService.GetUsersEatingToday();
+        labelEating.Text = "Elevi care mananca azi: " + eatingToday;
+
+
+    }
 
     private void cameraView_CamerasLoaded(object sender, EventArgs e)
     {
@@ -65,14 +72,23 @@ public partial class ScanPage : ContentPage
                 DateTime today = DateTime.Now.Date;
                 if (user.LastScan == today.ToString("yyyy-MM-dd"))
                 {
-                    barcodeResult.Text = "Deja scanat azi!"; 
+                    barcodeResult.TextColor = Colors.Red;
+                    barcodeResult.Text = "! Deja scanat azi"; 
                 }
                 else
                 {
                     bool isPaid = user.ZilePlatite.ContainsKey(today) && user.ZilePlatite[today] == 0;
-                    string message = isPaid ? "Utilizatorul a platit" : "Utilizatorul nu a platit";
+                    string message = isPaid ? "Utilizatorul a platit" : "Masa neplatita";
+                    Color color = isPaid ? Colors.Green : Colors.Red;
                     barcodeResult.Text = message;
+                    barcodeResult.TextColor = color;
+                    if (isPaid)
+                    {
+                        eatingToday--;
+                        labelEating.Text = "Elevi care mananca azi: " + eatingToday;
 
+
+                    }
                     user.LastScan = today.ToString("yyyy-MM-dd");
                     await FirestoreService.UpdateUserLastScan(user.Id.ToString(), user.LastScan);
                 }

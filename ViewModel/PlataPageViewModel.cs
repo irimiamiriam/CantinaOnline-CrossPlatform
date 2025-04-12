@@ -8,6 +8,7 @@ public class PlataPageViewModel : ObservableObject
 {
     private string _selectedClass;
     public string SelectedClass
+
     {
         get => _selectedClass;
         set
@@ -16,6 +17,7 @@ public class PlataPageViewModel : ObservableObject
             LoadStudents(); // Load students when a class is selected
         }
     }
+    public IRelayCommand PayForClassCommand { get; }
 
     public ObservableCollection<string> Classes { get; } = new()
     {
@@ -34,7 +36,57 @@ public class PlataPageViewModel : ObservableObject
         AddToZilePlatiteCommand = new RelayCommand<int>(async (userId) => {
             await ShowConfirmationDialog(userId);
         });
+        PayForClassCommand = new RelayCommand(async () =>
+        {
+            await PayForWholeClassAsync();
+        });
     }
+
+    private async Task PayForWholeClassAsync()
+    {
+        if (Students.Count == 0)
+        {
+            await Application.Current.MainPage.DisplayAlert("Eroare", "Nu există elevi în clasă.", "OK");
+            return;
+        }
+
+        var adminZileCantina = await FirestoreService.GetAdminZileCantina();
+        if (adminZileCantina == null || adminZileCantina.Count == 0)
+        {
+            await Application.Current.MainPage.DisplayAlert("Eroare", "Zilele cantinei nu sunt disponibile.", "OK");
+            return;
+        }
+
+        int totalZile = adminZileCantina.Count;
+        int totalRestante = 0;
+
+        foreach (var student in Students)
+        {
+            totalRestante += student.ZilePlatite.Count(z => z.Value == 1);
+        }
+
+        int totalCost = (totalZile * Students.Count - totalRestante) * 18;
+
+        bool confirm = await Application.Current.MainPage.DisplayAlert(
+            "Confirmare plată",
+            $"Număr elevi: {Students.Count}\nTotal restante: {totalRestante}\nTotal de plată: {totalCost} RON\nContinuați?",
+            "Da", "Nu");
+
+        if (confirm)
+        {
+            foreach (var student in Students)
+            {
+                await FirestoreService.UpdateUserZilePlatite(student.Id, adminZileCantina);
+            }
+
+            await Application.Current.MainPage.DisplayAlert("Succes", "Zilele plătite au fost actualizate pentru toată clasa.", "OK");
+
+            LoadStudents(); // Refresh data
+        }
+    }
+
+
+
     private async Task ShowConfirmationDialog(int userId)
     {
         var user = await FirestoreService.GetUserById(userId.ToString());
