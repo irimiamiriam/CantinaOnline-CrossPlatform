@@ -107,7 +107,7 @@ public class FirestoreService
         return targetPath; 
     }
 
-    internal async Task<AdminModel> GetAdminByPassword(string password)
+    internal async Task<ScanModel> GetScanByPassword(string password)
     {
 
         try
@@ -119,7 +119,7 @@ public class FirestoreService
             if (snapshot.Documents.Count > 0)
             {
                 var doc = snapshot.Documents[0];
-                return new AdminModel
+                return new ScanModel
                 {
                     
                     Rol= doc.GetValue<string>("Rol")
@@ -136,9 +136,37 @@ public class FirestoreService
 
         }
     }
+    internal async Task<AdminModel> GetAdminByPassword(string password)
+    {
+
+        try
+        {
+            CollectionReference usersRef = _db.Collection("Admins");
+            Query query = usersRef.WhereEqualTo("Parola", password);
+            QuerySnapshot snapshot = await query.GetSnapshotAsync();
+
+            if (snapshot.Documents.Count > 0)
+            {
+                var doc = snapshot.Documents[0];
+                return new AdminModel
+                {
+
+                    Rol = doc.GetValue<string>("Rol")
+
+                };
+            }
+            else
+                return null;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($" Error retrieving user: {ex.Message}");
+            return null;
+
+        }
+    }
 
 
-   
     public static async Task UpdateZilePlatite(DateTime selectedDate, ElevModel user, int value)
     {
         try

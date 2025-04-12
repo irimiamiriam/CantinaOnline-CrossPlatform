@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            xmlns:cv="clr-namespace:Camera.MAUI;assembly=Camera.MAUI"
+             x:Class="CantinaOnline.Pages.ScanPage"
+             Title="ScanPage"
+             NavigationPage.HasNavigationBar="True">
+    
+    <VerticalStackLayout Padding="20" HorizontalOptions="Center" VerticalOptions="Center">
+        <Label Text="{Binding UsersEatingToday, StringFormat='Număr utilizatori care mănâncă azi: {0}'}"
+               FontSize="20"
+               FontAttributes="Bold"
+               TextColor="Black"
+               HorizontalOptions="Center"/>
+      
+        <cv:CameraView x:Name="cameraView"
+                          CamerasLoaded="cameraView_CamerasLoaded"
+                          BarcodeDetected="cameraView_BarcodeDetected"
+                          BarCodeDetectionEnabled="True"
+                          HeightRequest="300" />
+        <Label x:Name="barcodeResult"></Label>
+        
+       
+
+
+        
+    </VerticalStackLayout>
+</ContentPage>

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CantinaOnline.Models
 {
-    public class AdminModel
+   public class ScanModel
     {
         public string Rol { get; set; } = string.Empty;
     }
