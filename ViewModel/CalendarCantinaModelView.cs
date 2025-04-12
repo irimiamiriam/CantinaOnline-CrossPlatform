@@ -13,7 +13,6 @@ public class CalendarCantinaModelView : INotifyPropertyChanged
 {
     private EventCollection _events;
     private List<DateTime> _selectedDates;
-    private FirestoreService _firestoreService;
 
     public event PropertyChangedEventHandler PropertyChanged;
 
@@ -43,7 +42,6 @@ public class CalendarCantinaModelView : INotifyPropertyChanged
 
     public CalendarCantinaModelView()
     {
-        _firestoreService = new FirestoreService();
         _events = new EventCollection();
         _selectedDates = new List<DateTime>();
 
