@@ -13,24 +13,34 @@
                 />
 
         <!-- List of students -->
-        <ListView ItemsSource="{Binding Students}" HasUnevenRows="True">
+        <ListView ItemsSource="{Binding Students}" HasUnevenRows="True" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Orientation="Horizontal" Padding="5">
-                            <Label Text="{Binding Nume}" VerticalOptions="Center" FontSize="16" />
+                        <Grid Padding="5" ColumnDefinitions="*,Auto">
+                            <!-- Student Name -->
+                            <Label Text="{Binding Nume}" 
+                           VerticalOptions="Center" 
+                           FontSize="16" 
+                           Grid.Column="0" />
 
-                            <!-- + Button to replace student's ZilePlatite with Admin's ZileCantina -->
-                            <Button Text="+" BackgroundColor="#007AFF" Margin="10,0,0,0"
-                             Command="{Binding Path=BindingContext.AddToZilePlatiteCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                            CommandParameter="{Binding Id}"
-                            HorizontalOptions="End"/>
-                        </StackLayout>
+                            <!-- Checkbox for selecting student -->
+                            <CheckBox IsChecked="{Binding IsSelected}" 
+                              VerticalOptions="Center" 
+                              Grid.Column="1" />
+                        </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Adauga plata pentru toată clasa"
+
+        <Button Text="Adaugă plata pentru elevii selectați"
+        BackgroundColor="Blue"
+        TextColor="White"
+        Margin="10,10,10,0"
+        Command="{Binding PayForSelectedStudentsCommand}" />
+
+        <Button Text="Selecteaza toti elevii din clasa"
         BackgroundColor="Green"
         TextColor="White"
         Margin="10,20,10,0"
