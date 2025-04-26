@@ -6,29 +6,56 @@
              x:Class="CantinaOnline.Pages.ElevPage"
              Title="ElevPage">
 
-    
+    <Grid>
 
-    <ScrollView>
-        <VerticalStackLayout Padding="10">
+        <!-- Main Page Content -->
+        <VerticalStackLayout x:Name="MainContent" Padding="20" Spacing="20">
 
-            <Image
-                x:Name="QrCodeImage"
-                 Source="{Binding QrCodeImage}"
-                HeightRequest="200"
-                WidthRequest="200"/>
-            
-       
-            <Label x:Name="numeL" HorizontalOptions="Center" Text="{Binding Nume}" FontSize="18" TextColor="Black"/>
+            <!-- QR Code -->
+            <Grid HorizontalOptions="Center">
+                <Image x:Name="QrCodeImage"
+                       Source="{Binding QrCodeImage}"
+                       WidthRequest="150"
+                       HeightRequest="150"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center">
+                    <Image.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnQrCodeTapped" />
+                    </Image.GestureRecognizers>
+                </Image>
+            </Grid>
+
+            <!-- Calendar Frame -->
             <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
-                <custom:CustomCalendarView
-                    ShowPastDatesCircled="True"
-   SelectedDates="{Binding SelectedDates}"
-   ZileRestante="{Binding ZileRestante}"
-   DayTappedCommand="{Binding DayTappedCommand}" />
+                <custom:CustomCalendarView 
+                    SelectedDates="{Binding SelectedDates}"
+                    ZileRestante="{Binding ZileRestante}"
+                    DayTappedCommand="{Binding DayTappedCommand}" />
             </Frame>
 
+            
+
         </VerticalStackLayout>
-    </ScrollView>
+
+        <!-- Overlay for Enlarged QR -->
+        <Grid x:Name="QrOverlay"
+              BackgroundColor="#80000000"  
+            IsVisible="False"
+              InputTransparent="False">
+
+            <Image Source="{Binding QrCodeImage}"
+                   WidthRequest="300"
+                   HeightRequest="300"
+                   HorizontalOptions="Center"
+                   VerticalOptions="Center">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnQrCodeTapped" />
+                </Image.GestureRecognizers>
+            </Image>
+
+        </Grid>
+
+    </Grid>
 
 
 

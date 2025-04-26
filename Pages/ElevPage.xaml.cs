@@ -14,19 +14,33 @@ public partial class ElevPage : ContentPage
         InitializeComponent();
         NavigationPage.SetHasNavigationBar(this, false);
 
-
-        // var vm = new ElevPageViewModel(user);
-        //vm.ForceCalendarRefresh = () =>
-        //{
-        //    int current = calendarView.Month;
-        //    calendarView.Month = current + 1;
-        //    calendarView.Month = current;
-        //};
-
         var vm = new NewElevPageViewModel(user);
         BindingContext = vm;
         
 
+
+    }
+    private bool _isQrExpanded = false;
+
+    private async void OnQrCodeTapped(object sender, EventArgs e)
+    {
+        if (_isQrExpanded)
+        {
+            // Hide overlay
+            await QrOverlay.FadeTo(0, 200);
+            QrOverlay.IsVisible = false;
+            MainContent.IsVisible = true;
+        }
+        else
+        {
+            // Show overlay
+            MainContent.IsVisible = false;
+            QrOverlay.Opacity = 0;
+            QrOverlay.IsVisible = true;
+            await QrOverlay.FadeTo(1, 200);
+        }
+
+        _isQrExpanded = !_isQrExpanded;
 
     }
 
