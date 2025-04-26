@@ -14,4 +14,3 @@ public class EventModel
     public DateTime EndTime { get; set; }
     public Color Color { get; set; }
 }
-

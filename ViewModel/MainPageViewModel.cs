@@ -43,7 +43,6 @@ namespace CantinaOnline.ViewModels
                 return;
 
             ElevModel? user = await _firestore.GetElevByPassword(PasswordInput);
-         //   ScanModel? scan = await _firestore.GetScanByPassword(PasswordInput);
             AdminModel? admin = await _firestore.GetAdminByPassword(PasswordInput);
 
             if (user != null)

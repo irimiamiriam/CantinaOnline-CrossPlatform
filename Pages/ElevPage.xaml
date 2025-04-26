@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:cal="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar"
-
+  xmlns:custom="clr-namespace:CustomCalendar;assembly=CustomCalendar"
              x:Class="CantinaOnline.Pages.ElevPage"
              Title="ElevPage">
 
@@ -11,7 +11,6 @@
     <ScrollView>
         <VerticalStackLayout Padding="10">
 
-            <!-- Cod QR -->
             <Image
                 x:Name="QrCodeImage"
                  Source="{Binding QrCodeImage}"
@@ -19,31 +18,15 @@
                 WidthRequest="200"/>
             
        
-            <!-- Nume Prenume -->
             <Label x:Name="numeL" HorizontalOptions="Center" Text="{Binding Nume}" FontSize="18" TextColor="Black"/>
-
-            <!-- Zile rămase (Calendar) -->
             <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
-                <cal:RangeSelectionCalendar x:Name="calendarView"
-                                  FirstDayOfWeek="Monday"  
-                                 TodayOutlineColor="Transparent"
-                                 EventIndicatorType="Background"
-                                         EventIndicatorColor="White"   
-                                EventIndicatorSelectedColor="White"
-                                 SelectedDayBackgroundColor="Blue"
-                                 SelectedDatesRangeBackgroundColor="Blue"
-                                  SwipeUpToHideEnabled="False"
-                                  ShowYearPicker="False"
-                                  FooterArrowVisible="False"
-                                     SelectedDates ="{Binding SelectedDates}"
-
-                                 SelectedDayTextColor="White"
-                                            
-                                 Events="{Binding Events}"
-                                        DayTappedCommand="{Binding DayTappedCommand}"     />
+                <custom:CustomCalendarView
+                    ShowPastDatesCircled="True"
+   SelectedDates="{Binding SelectedDates}"
+   ZileRestante="{Binding ZileRestante}"
+   DayTappedCommand="{Binding DayTappedCommand}" />
             </Frame>
 
-          
         </VerticalStackLayout>
     </ScrollView>
 

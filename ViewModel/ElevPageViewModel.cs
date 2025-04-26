@@ -8,27 +8,16 @@ using CommunityToolkit.Mvvm.Input;
 using CantinaOnline.Models;
 using Plugin.Maui.Calendar.Models;
 using QRCoder;
-
-public class DayEventCollection<T> : List<T>
-{
-    public Color EventIndicatorColor { get; set; }
-    public Color EventIndicatorSelectedColor { get; set; }
-
-    public DayEventCollection(Color eventIndicatorColor, Color eventIndicatorSelectedColor)
-    {
-        EventIndicatorColor = eventIndicatorColor;
-        EventIndicatorSelectedColor = eventIndicatorSelectedColor;
-    }
-}
+using System.Globalization;
+using CantinaOnline;
 
 
-
-
-public class ElevPageViewModel : INotifyPropertyChanged
+public  class ElevPageViewModel : INotifyPropertyChanged
 {
     private ElevModel _user;
     private EventCollection _events;
-
+    public CultureInfo Culture => new CultureInfo("ro-RO");
+    public Action ForceCalendarRefresh { get; set; }
 
     private ImageSource _qrCodeImage;
     public ImageSource QrCodeImage
@@ -42,6 +31,7 @@ public class ElevPageViewModel : INotifyPropertyChanged
     }
 
     private List<DateTime> _selectedDates;
+  
     public List<DateTime> SelectedDates
     {
         get => _selectedDates;
@@ -70,16 +60,28 @@ public class ElevPageViewModel : INotifyPropertyChanged
 
     public ICommand DayTappedCommand { get; }
 
+
     public ElevPageViewModel(ElevModel user)
     {
         _user = user;
         _events = new EventCollection();
-        SelectedDates = user.ZilePlatite.Keys.ToList();
+
 
         DayTappedCommand = new RelayCommand<DateTime>(OnDayTapped);
-       GenerateQR();
-       RemoveDays();
+        GenerateQR();
+        Initilise();
     }
+
+    private void Initilise()
+    {
+        SelectedDates = ZilePlatiteKeys;
+        RemoveDays();
+        ForceCalendarRefresh?.Invoke();
+
+
+    }
+
+
 
     private void GenerateQR()
     {
@@ -104,21 +106,29 @@ public class ElevPageViewModel : INotifyPropertyChanged
                 var dataGasita = _user.ZilePlatite.First(d => d.Key.Date == dataInceput.Date);
                 if (dataGasita.Value == 1||dataInceput.Date<DateTime.Now.Date)
                 {
-                    _events[dataInceput] = new DayEventCollection<EventModel>(Colors.Red, Colors.Red) { new() { Name = "", Description = "", Color = Colors.Red } };
+                    _events[dataInceput] = new DayEventCollection<EventModel>(Colors.PaleTurquoise, Colors.PaleTurquoise)
+            {
+                new() { Name = "", Description = "", StartTime= dataInceput}
+            };
                 }
                 
             }
             catch
             {
-                _events[dataInceput] = new DayEventCollection<EventModel>(Colors.AliceBlue, Colors.AliceBlue) { new EventModel { Name = "", Description = "" } };
+                _events[dataInceput] = new DayEventCollection<EventModel>(Colors.White, Colors.White)
+            {
+                new() { Name = "", Description = "", StartTime= dataInceput}
+            };
             }  
             dataInceput = dataInceput.AddDays(1);
         }
         OnPropertyChanged(nameof(Events));
     }
+  
 
     private async void OnDayTapped(DateTime dateTapped)
     {
+
         try
         {
             if (dateTapped.Date >= DateTime.Now.Date && dateTapped.DayOfWeek != DayOfWeek.Saturday && dateTapped.DayOfWeek != DayOfWeek.Sunday)
@@ -141,10 +151,16 @@ public class ElevPageViewModel : INotifyPropertyChanged
 
                             if (!_events.ContainsKey(dateTapped))
                             {
-                                _events[dateTapped] = new List<EventModel>();
+                                _events[dateTapped] = new DayEventCollection<EventModel>(Colors.AliceBlue, Colors.AliceBlue)
+                {
+        new() { Name = "", Description = "", StartTime = dateTapped }
+                  };
                             }
 
-                            _events[dateTapped] = new List<EventModel> { new EventModel { Name = "", Description = "" } };
+                            _events[dateTapped] = new DayEventCollection<EventModel>(Colors.AliceBlue, Colors.AliceBlue)
+            {
+                new() { Name = "", Description = "", StartTime= dateTapped}
+            };
                             _user.ZilePlatite[dateTapped] = 1;
                         }
 
@@ -185,13 +201,16 @@ public class ElevPageViewModel : INotifyPropertyChanged
         catch
         {
         }
-            SelectedDates = _user.ZilePlatite.Keys.ToList();
 
-            OnPropertyChanged(nameof(Events));
-        
+        SelectedDates = new List<DateTime>(_user.ZilePlatite.Keys);
+        OnPropertyChanged(nameof(SelectedDates));
+        ForceCalendarRefresh?.Invoke();
+        OnPropertyChanged(nameof(Events));
+
+
     }
 
-   
+
 
     protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
     {

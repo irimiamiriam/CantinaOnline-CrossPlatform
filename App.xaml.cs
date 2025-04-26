@@ -13,13 +13,11 @@ namespace CantinaOnline
          //   InitializeComponent();
             this.firestore = firestore;
 
-            // Initialize with a temporary page while checking connection
             _mainWindow = new Window(new ContentPage
             {
                 Content = new ActivityIndicator { IsRunning = true }
                 
             });
-            // Start connection check
             CheckConnection();
         }
 

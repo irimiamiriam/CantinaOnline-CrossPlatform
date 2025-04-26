@@ -2,25 +2,27 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CantinaOnline.Pages.CalendarCantinaPage"
-             xmlns:cal="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar"
+            
+              xmlns:custom="clr-namespace:CustomCalendar;assembly=CustomCalendar"
 
              Title="CalendarCantinaPage">
     <StackLayout>
-    <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
-    <cal:RangeSelectionCalendar x:Name="calendarView"
-                         FirstDayOfWeek="Monday"  
-                        TodayOutlineColor="Transparent"
-                        EventIndicatorType="Background"
-                        EventIndicatorColor="White"
-                        EventIndicatorSelectedColor="White"
-                        SelectedDayBackgroundColor="Blue"
-                        SelectedDatesRangeBackgroundColor="Blue"
-                        SelectedDayTextColor="White"
-                        SelectedDates="{Binding SelectedDates,Mode=TwoWay}"
-                        Events="{Binding Events,Mode=TwoWay}"
-                         DayTappedCommand="{Binding DayTappedCommand}"   /> 
-                </Frame>               
-        <Button Text="Update" Command="{Binding UpdateCalendarCommand}" />
-</StackLayout>
+       
+            <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">
+                <custom:CustomCalendarView
+              ShowPastDatesCircled="False"
+                SelectedDates="{Binding SelectedDates, Mode=TwoWay}"
+                ZileRestante="{Binding ZileRestante, Mode=TwoWay}"
+                DayTappedCommand="{Binding DayTappedCommand}" />
+            </Frame>
+
+            <Button Text="Actualizează Calendar" 
+                Command="{Binding UpdateCalendarCommand}" 
+                Margin="20"
+                BackgroundColor="Blue"
+                TextColor="White"
+                CornerRadius="10" />
+       
+    </StackLayout>
     
 </ContentPage>

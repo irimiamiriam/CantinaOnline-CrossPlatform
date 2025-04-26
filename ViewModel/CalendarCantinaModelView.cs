@@ -5,26 +5,17 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using CantinaOnline.Models;
-using Plugin.Maui.Calendar.Models;
 using CommunityToolkit.Mvvm.Input;
+using CantinaOnline.Models;
 
 public class CalendarCantinaModelView : INotifyPropertyChanged
 {
-    private EventCollection _events;
     private List<DateTime> _selectedDates;
+    private List<DateTime> _zileRestante;
+    private Dictionary<string, int> _zileCantina;
+    private List<DateTime> _tempDates;
 
     public event PropertyChangedEventHandler PropertyChanged;
-
-    public EventCollection Events
-    {
-        get => _events;
-        set
-        {
-            _events = value;
-            OnPropertyChanged();
-        }
-    }
 
     public List<DateTime> SelectedDates
     {
@@ -35,15 +26,24 @@ public class CalendarCantinaModelView : INotifyPropertyChanged
             OnPropertyChanged();
         }
     }
-    List<DateTime> tempDates;
-    Dictionary<string, int> zileCantina;
+
+    public List<DateTime> ZileRestante
+    {
+        get => _zileRestante;
+        set
+        {
+            _zileRestante = value;
+            OnPropertyChanged();
+        }
+    }
+
     public ICommand DayTappedCommand { get; }
     public ICommand UpdateCalendarCommand { get; }
 
     public CalendarCantinaModelView()
     {
-        _events = new EventCollection();
         _selectedDates = new List<DateTime>();
+        _zileRestante = new List<DateTime>();
 
         DayTappedCommand = new RelayCommand<DateTime>(OnDayTapped);
         UpdateCalendarCommand = new RelayCommand(async () => await UpdateCalendar());
@@ -54,64 +54,49 @@ public class CalendarCantinaModelView : INotifyPropertyChanged
     private async void InitializeCalendar()
     {
         await LoadSelectedDates();
-        MarkWeekendsAsEvents();
     }
 
     private async Task LoadSelectedDates()
     {
-        zileCantina = await FirestoreService.GetAdminZileCantina();
+        _zileCantina = await FirestoreService.GetAdminZileCantina();
 
-        if (zileCantina != null)
+        _tempDates = new List<DateTime>();
+
+        foreach (var dateString in _zileCantina.Keys)
         {
-            tempDates = new List<DateTime>();
-
-            foreach (var dateString in zileCantina.Keys)
+            if (DateTime.TryParse(dateString, out DateTime date))
             {
-                if (DateTime.TryParse(dateString, out DateTime date))
-                {
-                    tempDates.Add(date);
-                }
-            }
-
-            SelectedDates = tempDates;
-            Console.WriteLine($"Loaded {SelectedDates.Count} selected dates from Firestore.");
-        }
-
-
-        // Refresh UI
-        OnPropertyChanged(nameof(SelectedDates));
-    }
-
-    private void MarkWeekendsAsEvents()
-    {
-        DateTime firstDay = DateTime.Parse(zileCantina.Keys.Min());
-        DateTime lastDay = DateTime.Parse(zileCantina.Keys.Max());
-
-        for (DateTime date = firstDay; date <= lastDay; date = date.AddDays(1))
-        {
-            if (date.DayOfWeek == DayOfWeek.Saturday || date.DayOfWeek == DayOfWeek.Sunday || !zileCantina.ContainsKey(date.ToString("yyyy-MM-dd")))
-            {
-                _events[date] = new List<EventModel> { new EventModel { Name = "", Description = "" } };
+                _tempDates.Add(date);
             }
         }
 
-        // Refresh UI
-        OnPropertyChanged(nameof(Events));
+        SelectedDates = _tempDates;
+
+        // After loading selected dates, initialize zile restante
+        ZileRestante = SelectedDates
+            .Where(d => d.Date < DateTime.Now.Date) // before today
+            .ToList();
     }
 
-    private async void OnDayTapped(DateTime date)
+    private void OnDayTapped(DateTime date)
     {
-        if (Events.ContainsKey(date))
+        if (SelectedDates.Any(d => d.Date == date.Date))
         {
-            Events.Remove(date);  // Remove event if it was already added
+            SelectedDates.RemoveAll(d => d.Date == date.Date);
         }
         else
         {
-            Events[date] = new List<EventModel> { new EventModel { Name = "", Description = "" } }; // Add event
+            SelectedDates.Add(date);
         }
-        SelectedDates = tempDates;
+
+        // Recalculate zile restante
+        ZileRestante = SelectedDates
+            .Where(d => d.Date < DateTime.Now.Date)
+            .ToList();
+
+        OnPropertyChanged(nameof(SelectedDates));
+        OnPropertyChanged(nameof(ZileRestante));
     }
-    
 
     private async Task UpdateCalendar()
     {
@@ -119,10 +104,7 @@ public class CalendarCantinaModelView : INotifyPropertyChanged
 
         foreach (var date in SelectedDates)
         {
-            if (!Events.ContainsKey(date))
-            {
-                zileCantinaToSave[date.ToString("yyyy-MM-dd")] = 0;
-            }
+            zileCantinaToSave[date.ToString("yyyy-MM-dd")] = 0; // 0 = normal available day
         }
 
         await FirestoreService.UpdateAdminZileCantina(zileCantinaToSave);

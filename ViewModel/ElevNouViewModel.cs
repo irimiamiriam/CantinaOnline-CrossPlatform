@@ -59,10 +59,10 @@ public class ElevNouViewModel : ObservableObject
         const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
         GeneratedPassword = new string(Enumerable.Range(0, 8)
-                                        .Select(_ => chars[random.Next(chars.Length)]) // Only letters & numbers
+                                        .Select(_ => chars[random.Next(chars.Length)]) 
                                         .ToArray());
 
-        GeneratedId = random.Next(10000, 99999).ToString(); // 5-digit ID
+        GeneratedId = random.Next(10000, 99999).ToString(); 
     }
 
     private async Task AddElev()
