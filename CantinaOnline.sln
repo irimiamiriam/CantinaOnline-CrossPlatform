@@ -5,7 +5,7 @@ VisualStudioVersion = 17.11.35303.130
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CantinaOnline", "CantinaOnline.csproj", "{A37E07E7-B544-4325-BAB4-8F3405DB3FF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomCalendar", "..\..\Class\CustomCalendar\CustomCalendar.csproj", "{50DE00C6-9F27-44D2-31AC-0E0C7A4C785A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomCalendar", "Libraries\CustomCalendar\CustomCalendar.csproj", "{4CF3AD79-A3A9-F9D5-984E-D9DB9B555838}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,10 @@ Global
 		{A37E07E7-B544-4325-BAB4-8F3405DB3FF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A37E07E7-B544-4325-BAB4-8F3405DB3FF0}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A37E07E7-B544-4325-BAB4-8F3405DB3FF0}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{50DE00C6-9F27-44D2-31AC-0E0C7A4C785A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{50DE00C6-9F27-44D2-31AC-0E0C7A4C785A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{50DE00C6-9F27-44D2-31AC-0E0C7A4C785A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{50DE00C6-9F27-44D2-31AC-0E0C7A4C785A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4CF3AD79-A3A9-F9D5-984E-D9DB9B555838}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CF3AD79-A3A9-F9D5-984E-D9DB9B555838}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CF3AD79-A3A9-F9D5-984E-D9DB9B555838}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CF3AD79-A3A9-F9D5-984E-D9DB9B555838}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
