@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="CustomCalendar.CustomCalendarView">
+    <VerticalStackLayout Padding="10" Spacing="10">
+       
+        <Grid ColumnDefinitions="Auto,*,Auto" VerticalOptions="Center">
+            <Button Text="←"
+                    Clicked="OnPreviousMonthClicked"
+                                        TextColor="Black"
+
+                    BackgroundColor="Transparent" />
+            <Label x:Name="MonthLabel"
+                   Grid.Column="1"
+                                       TextColor="Black"
+
+                   HorizontalOptions="Center"
+                   FontAttributes="Bold"
+                   FontSize="18" />
+            <Button Text="→"
+                    Grid.Column="2"
+                    TextColor="Black"
+                    Clicked="OnNextMonthClicked"
+                    BackgroundColor="Transparent" />
+        </Grid>
+
+  
+        <ScrollView>
+            <Grid x:Name="CalendarGrid"
+                  RowSpacing="5"
+                  ColumnSpacing="5" />
+        </ScrollView>
+    </VerticalStackLayout>
+</ContentView>
+
