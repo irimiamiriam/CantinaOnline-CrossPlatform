@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="CantinaOnline.Pages.CalendarCantinaPage"
             
-              xmlns:custom="clr-namespace:CustomCalendar;assembly=CustomCalendar"
+        xmlns:custom="clr-namespace:CantinaOnline.Controls.CustomCalendar"
 
              Title="CalendarCantinaPage">
     <StackLayout>

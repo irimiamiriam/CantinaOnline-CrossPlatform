@@ -5,7 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Windows.Input;
 
-namespace CustomCalendar
+namespace CantinaOnline.Controls.CustomCalendar
 {
     public partial class CustomCalendarView : ContentView
     {
