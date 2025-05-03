@@ -2,7 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
             xmlns:cal="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar"
-  xmlns:custom="clr-namespace:CustomCalendar;assembly=CustomCalendar"
+xmlns:custom="clr-namespace:CantinaOnline.Controls.CustomCalendar"
              x:Class="CantinaOnline.Pages.ElevPage"
              Title="ElevPage">
 

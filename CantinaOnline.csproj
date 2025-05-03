@@ -91,7 +91,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <MauiXaml Update="Libraries\CustomCalendar\CustomCalendarView.xaml">
+	  <MauiXaml Update="Controls\CustomCalendarView.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\AdminPage.xaml">
@@ -121,16 +121,6 @@
 	  <MauiXaml Update="Pages\SplashScreen.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <None Include="Libraries\CustomCalendar\CustomCalendar.csproj" />
-	  <None Include="Libraries\CustomCalendar\CustomCalendar.csproj.user" />
-	  <None Include="Libraries\CustomCalendar\CustomCalendar.sln" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <ProjectReference Include="Libraries\CustomCalendar\CustomCalendar.csproj" />
 	</ItemGroup>
 
 </Project>
