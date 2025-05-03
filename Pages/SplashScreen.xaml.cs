@@ -1,5 +1,7 @@
 namespace CantinaOnline.Pages;
 
+using Application = Microsoft.Maui.Controls.Application;
+
 public partial class SplashScreen : ContentPage
 {
 

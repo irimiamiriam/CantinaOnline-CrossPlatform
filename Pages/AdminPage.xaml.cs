@@ -4,6 +4,8 @@ using CommunityToolkit.Mvvm.Input;
 using Camera.MAUI.ZXing;
 using CantinaOnline.Models;
 
+using Application = Microsoft.Maui.Controls.Application;
+
 namespace CantinaOnline.Pages;
 
 public partial class AdminPage : ContentPage

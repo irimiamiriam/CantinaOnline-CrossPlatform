@@ -1,5 +1,7 @@
 ﻿using CantinaOnline.Pages;
 using Microsoft.Maui.Controls;
+using Application = Microsoft.Maui.Controls.Application;
+
 
 namespace CantinaOnline
 {

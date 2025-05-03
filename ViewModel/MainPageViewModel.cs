@@ -7,6 +7,8 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.Maui.Controls;
 
+using Application = Microsoft.Maui.Controls.Application;
+
 namespace CantinaOnline.ViewModels
 {
     public partial class MainPageViewModel : ObservableObject

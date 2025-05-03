@@ -6,6 +6,8 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Application = Microsoft.Maui.Controls.Application;
+
 public class ElevNouViewModel : ObservableObject
 {
     private string _numeElev;

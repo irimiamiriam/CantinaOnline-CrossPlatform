@@ -11,8 +11,9 @@ using QRCoder;
 using System.Globalization;
 using CantinaOnline;
 
+using Application = Microsoft.Maui.Controls.Application;
 
-public  class ElevPageViewModel : INotifyPropertyChanged
+public class ElevPageViewModel : INotifyPropertyChanged
 {
     private ElevModel _user;
     private EventCollection _events;
