@@ -36,8 +36,6 @@ public partial class ScanPage : ContentPage
         cameraView.ControlBarcodeResultDuplicate = true;
         cameraView.BarCodeDetectionEnabled = true;
        
-        NavigationPage.SetHasNavigationBar(this, false);
-
     }
 
     private async void GetUserEating()

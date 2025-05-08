@@ -11,7 +11,7 @@ namespace CantinaOnline
         {
             var builder = MauiApp.CreateBuilder();
 
-        
+
 
             builder.Services.AddSingleton<FirestoreService>();
 
@@ -20,7 +20,7 @@ namespace CantinaOnline
                 .UseMauiApp<App>()
                 .UseMauiCameraView()
                 .UseMauiCommunityToolkit()
-                            
+
 
                 .ConfigureFonts(fonts =>
                 {

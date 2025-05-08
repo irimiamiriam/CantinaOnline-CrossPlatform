@@ -4,7 +4,7 @@
             xmlns:cal="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar"
 xmlns:custom="clr-namespace:CantinaOnline.Controls.CustomCalendar"
              x:Class="CantinaOnline.Pages.ElevPage"
-             Title="ElevPage">
+             Title="Elev">
 
     <Grid>
 

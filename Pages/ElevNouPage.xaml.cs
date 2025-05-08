@@ -6,7 +6,6 @@ public partial class ElevNouPage : ContentPage
 	{
 		InitializeComponent();
 		BindingContext = new ElevNouViewModel();
-        NavigationPage.SetHasNavigationBar(this, false);
 
     }
 }

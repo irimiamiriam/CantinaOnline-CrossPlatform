@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using Android.Views;
 using CantinaOnline.Pages;
 
 namespace CantinaOnline
@@ -15,9 +16,14 @@ namespace CantinaOnline
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-          
+            
+            // Remove title bar completely
+            Window.SetFlags(
+                WindowManagerFlags.LayoutNoLimits,
+                WindowManagerFlags.LayoutNoLimits);
+
         }
 
-        
+
     }
 }

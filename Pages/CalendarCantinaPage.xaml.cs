@@ -7,7 +7,6 @@ public partial class CalendarCantinaPage : ContentPage
 	public CalendarCantinaPage()
 	{
 		InitializeComponent();
-        NavigationPage.SetHasNavigationBar(this, false);
 
         BindingContext = new CalendarCantinaModelView();
 	}

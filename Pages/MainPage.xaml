@@ -1,65 +1,66 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:mct="clr-namespace:CommunityToolkit.Maui.Behaviors;assembly=CommunityToolkit.Maui"
-			 x:Class="CantinaOnline.Pages.MainPage"
-			 Title="MainPage"
-          >
+             x:Class="CantinaOnline.Pages.MainPage"
+             Title="MainPage"
+             Shell.NavBarIsVisible="False">
 
-	<VerticalStackLayout Spacing="0" Padding="20" BackgroundColor="White">
-		
+    <VerticalStackLayout Spacing="0" Padding="20" 
+                        BackgroundColor="{AppThemeBinding Light=White, Dark=Black}">
+
         <Label 
-			x:Name="conCheck"
-		Text="{Binding ConnectionStatus}"
-			VerticalOptions="Center" 
-			HorizontalOptions="Center" />
+            x:Name="conCheck"
+            Text="{Binding ConnectionStatus}"
+            VerticalOptions="Center" 
+            HorizontalOptions="Center"
+            TextColor="{AppThemeBinding Light=Black, Dark=White}" />
 
-		<!-- Title -->
-		<Label Text="Bine ai venit!"
-			TextColor="Black"
-            FontSize="24"
-		    FontAttributes="Bold" 
-			HorizontalOptions="Start" 
-			Margin="20,150,0,10"/>
+        <!-- Title -->
+        <Label Text="Bine ai venit!"
+               TextColor="{AppThemeBinding Light=Black, Dark=White}"
+               FontSize="24"
+               FontAttributes="Bold" 
+               HorizontalOptions="Start" 
+               Margin="20,150,0,10"/>
 
-		<!-- Password Entry with Border -->
-		<Border StrokeThickness="1"
-			Margin="20,0,20,0"
-			Stroke="Gray"
-			Background="White"
-			HeightRequest="47"
-			WidthRequest="300"
-			HorizontalOptions="Start"
-			Padding="5"
-			StrokeShape="RoundRectangle 12">
-			<Entry Placeholder="Introdu parola.." 
+        <!-- Password Entry with Border -->
+        <Border StrokeThickness="1"
+                Margin="20,0,20,0"
+                Stroke="{AppThemeBinding Light=Gray, Dark=LightGray}"
+                Background="{AppThemeBinding Light=White, Dark=#1E1E1E}"
+                HeightRequest="47"
+                WidthRequest="300"
+                HorizontalOptions="Start"
+                Padding="5"
+                StrokeShape="RoundRectangle 12">
+            <Entry Placeholder="Introdu parola.." 
                    x:Name="passwordInput"
                    Text="{Binding PasswordInput}"
-				FontFamily="Rony"
+                   FontFamily="Rony"
                    IsPassword="True"
-				BackgroundColor="Transparent"/>
-		</Border>
+                   BackgroundColor="Transparent"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+        </Border>
 
-	
+        <!-- Remember Me Checkbox -->
+        <HorizontalStackLayout Spacing="10">
+            <CheckBox x:Name="RememberMeCheckBox" IsChecked="{Binding RememberMeChecked}"/>
+            <Label Text="Ține-mă minte" 
+                   VerticalOptions="Center"
+                   TextColor="{AppThemeBinding Light=Black, Dark=White}"/>
+        </HorizontalStackLayout>
 
-		<!-- Remember Me Checkbox -->
-		<HorizontalStackLayout Spacing="10">
-            <CheckBox x:Name="RememberMeCheckBox"  IsChecked="{Binding RememberMeChecked}"/>
-			<Label Text="Ține-mă minte" VerticalOptions="Center"/>
-		</HorizontalStackLayout>
-
-		<!-- Login Buttons -->
+        <!-- Login Button (keeps its color since it's brand-specific) -->
         <Button Text="Intră în cont"
-			FontAttributes="Bold"
-			FontFamily="Rony"
-			HeightRequest="48"
-			BackgroundColor="#007AFF" 
-			TextColor="White"
-			CornerRadius="12"
-			Margin="20,0,20,0"
-			HorizontalOptions="Fill"
-            Command="{Binding LoginCommand}"/>
-
-
+                FontAttributes="Bold"
+                FontFamily="Rony"
+                HeightRequest="48"
+                BackgroundColor="#007AFF" 
+                TextColor="White"
+                CornerRadius="12"
+                Margin="20,0,20,0"
+                HorizontalOptions="Fill"
+                Command="{Binding LoginCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

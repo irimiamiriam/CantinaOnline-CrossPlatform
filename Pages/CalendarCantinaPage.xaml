@@ -5,7 +5,7 @@
             
         xmlns:custom="clr-namespace:CantinaOnline.Controls.CustomCalendar"
 
-             Title="CalendarCantinaPage">
+             Title="Calendar Cantina">
     <StackLayout>
        
             <Frame Padding="10" Margin="5" HasShadow="False" BorderColor="Gray">

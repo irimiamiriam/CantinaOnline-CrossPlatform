@@ -6,7 +6,6 @@ public partial class ContabilPage : ContentPage
 	public ContabilPage()
 	{
 		InitializeComponent();
-        NavigationPage.SetHasNavigationBar(this, false);
 
         VerifyAndUpdateZileCantina();
 	}
